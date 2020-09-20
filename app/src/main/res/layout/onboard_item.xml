@@ -1,21 +1,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <ImageView
-        android:layout_marginTop="50dp"
+        android:id="@+id/iv_onboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="50dp"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:adjustViewBounds="true"
+        android:gravity="center"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:id="@+id/iv_onboard"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/ob_banner_height"
-        android:gravity="center"
-        android:scaleType="fitXY"
-        android:src="@drawable/onboard_page1" />
+        android:scaleType="fitCenter"
+        android:src="@drawable/latexsupportgraphic"/>
 
     <RelativeLayout
         android:layout_below="@+id/iv_onboard"
@@ -32,25 +35,29 @@
                 android:id="@+id/tv_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/segoe_ui"
                 android:gravity="center"
                 android:paddingLeft="@dimen/ob_desc_padding"
-                android:paddingRight="@dimen/ob_desc_padding"
 
+                android:paddingRight="@dimen/ob_desc_padding"
                 android:textAllCaps="true"
-                android:textColor="@color/ob_header"
-                android:textSize="@dimen/ob_header_text_size" />
+                android:textColor="@color/idle_dot"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/segoe_ui"
                 android:gravity="center"
                 android:paddingLeft="@dimen/ob_desc_padding"
-                android:paddingRight="@dimen/ob_desc_padding"
 
-                android:textColor="@color/ob_desc"
-                android:textSize="@dimen/ob_desc_text_size" />
+                android:paddingRight="@dimen/ob_desc_padding"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="italic" />
 
         </LinearLayout>
 

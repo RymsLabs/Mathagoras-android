@@ -3,6 +3,9 @@ package com.ryms.mathagoras;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
+
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -18,20 +21,12 @@ public class OnBoardingActivity extends AppCompatActivity {
     private LinearLayout pager_indicator;
     private int dotsCount;
     private ImageView[] dots;
-
-
-
     private ViewPager onboard_pager;
-
     private OnBoard_Adapter mAdapter;
-
     private Button btn_get_started;
-
     int previous_pos=0;
 
-
     ArrayList<OnBoardItem> onBoardItems=new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +52,6 @@ public class OnBoardingActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
 
                 // Change the current position intimation
-
                 for (int i = 0; i < dotsCount; i++) {
                     dots[i].setImageDrawable(ContextCompat.getDrawable(OnBoardingActivity.this, R.drawable.non_selected_item_dot));
                 }
@@ -81,8 +75,8 @@ public class OnBoardingActivity extends AppCompatActivity {
         btn_get_started.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(OnBoardingActivity.this,"Redirect to wherever you want",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(OnBoardingActivity.this, Choice.class);
+                startActivity(intent);
             }
         });
 
@@ -91,21 +85,18 @@ public class OnBoardingActivity extends AppCompatActivity {
     }
 
     // Load data into the viewpager
-
     public void loadData()
     {
 
-//        int[] header = {R.string.ob_header1, R.string.ob_header2, R.string.ob_header3};
-//        int[] desc = {R.string.ob_desc1, R.string.ob_desc2, R.string.ob_desc3};
-        int[] imageId = {R.drawable.latex_support, R.drawable.poll_support, R.drawable.calendar_sync};
-
+        String[] header = {"Latex Support", "Real-time Polls", "Calender Sync"};
+        String[] desc = {"Scientific Mathematical Typography is now ABCD!", "Experience an enhanced version of online classroom interaction", "Never miss a class by syncing your calendar with your timetable"};
+        int[] imageId = {R.drawable.latexsupportgraphic, R.drawable.realtimegraphic, R.drawable.calendargraphic};
         for(int i=0;i<imageId.length;i++)
         {
             OnBoardItem item=new OnBoardItem();
             item.setImageID(imageId[i]);
-//            item.setTitle(getResources().getString(header[i]));
-//            item.setDescription(getResources().getString(desc[i]));
-
+            item.setTitle(header[i]);
+            item.setDescription(desc[i]);
             onBoardItems.add(item);
         }
     }

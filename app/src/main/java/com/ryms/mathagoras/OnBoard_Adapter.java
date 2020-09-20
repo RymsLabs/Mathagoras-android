@@ -8,20 +8,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.viewpager.widget.PagerAdapter;
-
 import java.util.ArrayList;
-
-
-/**
- * Created by Jaison
- */
-
 
 class OnBoard_Adapter extends PagerAdapter {
 
     private Context mContext;
     ArrayList<OnBoardItem> onBoardItems=new ArrayList<>();
-
 
     public OnBoard_Adapter(Context mContext, ArrayList<OnBoardItem> items) {
         this.mContext = mContext;

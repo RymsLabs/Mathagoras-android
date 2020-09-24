@@ -15,13 +15,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/welcomelogo" />
 
     <Button
         android:id="@+id/explore"
         android:layout_width="239sp"
         android:layout_height="80dp"
-        android:background="@drawable/explore_button"
+        android:background="@drawable/explorebutton"
         android:text="Explore"
         android:textColor="#FFFFFF"
         android:textSize="20sp"

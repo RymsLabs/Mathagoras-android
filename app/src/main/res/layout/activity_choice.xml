@@ -17,14 +17,14 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ultraprodesign" />
+        app:srcCompat="@drawable/choicedesign" />
 
     <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
-        android:background="@drawable/login"
+        android:background="@drawable/choicelogin"
         android:text="Login"
         android:textColor="#715BF0"
         android:textSize="20sp"
@@ -38,7 +38,7 @@
         android:layout_width="295dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
-        android:background="@drawable/signup"
+        android:background="@drawable/choicesignup"
         android:text="Sign Up"
         android:textSize="20sp"
         android:textStyle="bold"

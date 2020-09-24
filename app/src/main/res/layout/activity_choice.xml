@@ -11,7 +11,8 @@
         android:id="@+id/imageView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleType="centerCrop"
+        android:layout_marginBottom="10dp"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -21,7 +22,7 @@
 
     <Button
         android:id="@+id/login"
-        android:layout_width="wrap_content"
+        android:layout_width="295dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:background="@drawable/choicelogin"
@@ -37,7 +38,7 @@
         android:id="@+id/signup"
         android:layout_width="295dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="64dp"
         android:background="@drawable/choicesignup"
         android:text="Sign Up"
         android:textSize="20sp"

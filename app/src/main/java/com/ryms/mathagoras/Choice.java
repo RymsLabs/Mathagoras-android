@@ -37,7 +37,7 @@ public class Choice extends AppCompatActivity {
         startActivity(intent);
     }
     public void openSignActivity(){
-        Intent intent = new Intent(this, OnBoardingActivity.class);
+        Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
     }
 }

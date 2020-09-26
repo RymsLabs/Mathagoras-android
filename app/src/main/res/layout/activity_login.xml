@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="20dp"
         android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/emailSign"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,31 +21,32 @@
         app:srcCompat="@drawable/loginsignupdesign" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/emailSign"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginEnd="100dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
-        android:fontFamily="@font/sitka_banner"
+        android:fontFamily="@font/segoe_ui"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:textColor="#715BF0"
         android:textColorHint="#AFAFAF"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
+        app:layout_constraintBottom_toTopOf="@+id/passSign"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/passSign"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="101dp"
-        android:layout_marginEnd="101dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
         android:layout_marginBottom="80dp"
         android:ems="10"
-        android:fontFamily="@font/sitka_banner"
+        android:fontFamily="@font/segoe_ui"
         android:hint="Password"
         android:inputType="textPassword"
         android:textColor="#715BF0"
@@ -56,32 +57,36 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="152dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+
         android:fontFamily="@font/poor_richard"
         android:text="WELCOME \nBACK"
         android:textColor="#FFFFFF"
         android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/emailSign"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.52" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="290dp"
         android:layout_marginEnd="33dp"
         android:layout_marginBottom="72dp"
         android:background="@drawable/todashboard"
+        android:onClick="loginPressed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        android:onClick="loginPressed" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

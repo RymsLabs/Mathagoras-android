@@ -7,11 +7,11 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.net.ConnectException;
 import java.net.UnknownHostException;
 
 import okhttp3.Call;
@@ -29,8 +29,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        email = findViewById(R.id.editTextTextEmailAddress);
-        password = findViewById(R.id.editTextTextPassword);
+        email = findViewById(R.id.emailSign);
+        password = findViewById(R.id.passSign);
     }
 
     public void loginPressed(View view) {
@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-        //TODO: Possibly do a better email validation or use an extern library.
+        //TODO: Possibly do a better email validation or use an external library.
         OkHttpClient client = new OkHttpClient();
         String plainAuth = emailTxt + ":" + passTxt;
         String base64 = null;
@@ -103,6 +103,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if (!response.isSuccessful()) {
                     //TODO: Alert user of login failure and handle error using try catch.
+                    LoginActivity.this.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "Incorrect username or password!", Toast.LENGTH_LONG).show();
+                        }
+                    });
                     throw new IOException("Unexpected code " + response);
                 } else {
 

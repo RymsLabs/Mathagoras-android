@@ -21,6 +21,23 @@
         app:srcCompat="@drawable/loginsignupdesign" />
 
     <EditText
+        android:id="@+id/name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="101dp"
+        android:layout_marginEnd="101dp"
+        android:layout_marginBottom="20dp"
+        android:ems="10"
+        android:fontFamily="@font/sitka_banner"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        android:textColor="#715BF0"
+        android:textColorHint="#AFAFAF"
+        app:layout_constraintBottom_toTopOf="@+id/emailSign"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
         android:id="@+id/emailSign"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -85,23 +102,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="101dp"
-        android:layout_marginEnd="101dp"
-        android:layout_marginBottom="20dp"
-        android:ems="10"
-        android:fontFamily="@font/sitka_banner"
-        android:hint="Name"
-        android:inputType="textPersonName"
-        android:textColor="#715BF0"
-        android:textColorHint="#AFAFAF"
-        app:layout_constraintBottom_toTopOf="@+id/emailSign"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

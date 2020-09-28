@@ -35,9 +35,9 @@ public class SignUpActivity extends AppCompatActivity {
     public void signupPressed(View view) {
         OkHttpClient client = new OkHttpClient();
         RequestBody body = RequestBody.create(("{" +
-                "\"student_id\": \"e19cse112\"," +
+                "\"student_id\": \"e18dse582\"," +
                 "\"fname\": \"Isffhaan\"," +
-                "\"email\": \"adef@b.com\"," +
+                "\"email\": \"aaa@bs.com\"," +
                 "\"password\": \"Ishaffan\"," +
                 "\"dob\": \"2000-08-06\"" +
                 "}"), JSON);

@@ -32,15 +32,15 @@ public class DashBoard extends AppCompatActivity {
         ArrayList<Model> models = new ArrayList<>();
 
         Model model = new Model();
-        model.setImage(R.drawable.tile);
+        model.setImage(R.drawable.shadowfight);
         models.add(model);
 
         model = new Model();
-        model.setImage(R.drawable.tile);
+        model.setImage(R.drawable.shadowfight);
         models.add(model);
 
         model = new Model();
-        model.setImage(R.drawable.tile);
+        model.setImage(R.drawable.shadowfight);
         models.add(model);
 
         return models;

@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -25,24 +28,49 @@ import okhttp3.Response;
 public class SignUpActivity extends AppCompatActivity {
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    EditText userId, name, emailSign, passSign;
+    Switch teacherSwitch;
+    boolean isTeacher;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        userId = findViewById(R.id.userId);
+        name = findViewById(R.id.name);
+        emailSign = findViewById(R.id.emailSign);
+        passSign = findViewById(R.id.passSign);
+        teacherSwitch = findViewById(R.id.teacherSwitch);
+
+        teacherSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isTeacher = isChecked;
+            }
+        });
     }
 
+
     public void signupPressed(View view) {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            if (isTeacher) {
+                jsonBody.put("teacher_id", userId.getText().toString());
+            } else {
+                jsonBody.put("student_id", userId.getText().toString());
+            }
+            jsonBody.put("fname", name.getText().toString());
+            jsonBody.put("email", emailSign.getText().toString());
+            jsonBody.put("password", passSign.getText().toString());
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
         OkHttpClient client = new OkHttpClient();
-        RequestBody body = RequestBody.create(("{" +
-                "\"student_id\": \"e18dse582\"," +
-                "\"fname\": \"Isffhaan\"," +
-                "\"email\": \"aaa@bs.com\"," +
-                "\"password\": \"Ishaffan\"," +
-                "\"dob\": \"2000-08-06\"" +
-                "}"), JSON);
+        String requestUrl = isTeacher?Config.TEACHER_SIGNUP:Config.STUDENT_SIGNUP;
+        RequestBody body = RequestBody.create(String.valueOf(jsonBody), JSON);
         Request request = new Request.Builder()
-                .url(Config.STUDENT_SIGNUP)
+                .url(requestUrl)
                 .post(body)
                 .build();
 
@@ -67,7 +95,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 Intent intent = new Intent(SignUpActivity.this, DashBoard.class);
                                 startActivity(intent);
                             } else {
-                                Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Error: " + signUpResponse.getString("message"), Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

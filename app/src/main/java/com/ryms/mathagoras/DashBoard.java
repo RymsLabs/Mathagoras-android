@@ -6,43 +6,52 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 public class DashBoard extends AppCompatActivity {
 
-    RecyclerView recyclerView;
     MyAdapter myAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ArrayList<Model> modelArrayList = new ArrayList<>();
+        RecyclerView recyclerView;
 
-        myAdapter = new MyAdapter(this, getMyList());
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+
+        myAdapter = new MyAdapter(modelArrayList);
         recyclerView.setAdapter(myAdapter);
 
-    }
-
-    private ArrayList<Model> getMyList(){
-
-        ArrayList<Model> models = new ArrayList<>();
-
-        Model model = new Model();
-        model.setImage(R.drawable.shadowfight);
-        models.add(model);
-
-        model = new Model();
-        model.setImage(R.drawable.shadowfight);
-        models.add(model);
-
-        model = new Model();
-        model.setImage(R.drawable.shadowfight);
-        models.add(model);
-
-        return models;
+        JSONObject jsonObject = new JSONObject();
+        JSONArray courses;
+        {
+            try {
+                courses = jsonObject.getJSONArray("enrolled");
+                for (int i = 0; i < courses.length(); i++) {
+                    Model model = new Model();
+                    JSONObject temp = courses.getJSONObject(i);
+                    model.cname = temp.getString("name");
+                    //model.tname = temp.getString("name");
+                    model.description = temp.getString("description");
+                    model.setImage(R.drawable.shadowfight);
+                    modelArrayList.add(model);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

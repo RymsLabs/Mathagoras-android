@@ -1,4 +1,4 @@
-package com.ryms.mathagoras;
+package com.ryms.mathagoras.Onboard;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.viewpager.widget.PagerAdapter;
+
+import com.ryms.mathagoras.R;
+
 import java.util.ArrayList;
 
 class OnBoard_Adapter extends PagerAdapter {

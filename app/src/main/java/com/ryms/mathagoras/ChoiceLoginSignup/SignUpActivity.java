@@ -1,4 +1,4 @@
-package com.ryms.mathagoras;
+package com.ryms.mathagoras.ChoiceLoginSignup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,8 +9,11 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.ryms.mathagoras.Configurations.Config;
+import com.ryms.mathagoras.Dashb.DashBoard;
+import com.ryms.mathagoras.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,7 +70,7 @@ public class SignUpActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         OkHttpClient client = new OkHttpClient();
-        String requestUrl = isTeacher?Config.TEACHER_SIGNUP:Config.STUDENT_SIGNUP;
+        String requestUrl = isTeacher? Config.TEACHER_SIGNUP:Config.STUDENT_SIGNUP;
         RequestBody body = RequestBody.create(String.valueOf(jsonBody), JSON);
         Request request = new Request.Builder()
                 .url(requestUrl)

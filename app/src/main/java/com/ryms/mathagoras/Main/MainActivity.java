@@ -1,4 +1,4 @@
-package com.ryms.mathagoras;
+package com.ryms.mathagoras.Main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+
+import com.ryms.mathagoras.ChoiceLoginSignup.Choice;
+import com.ryms.mathagoras.Onboard.OnBoardingActivity;
+import com.ryms.mathagoras.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,8 +1,10 @@
-package com.ryms.mathagoras;
+package com.ryms.mathagoras.StudentClass;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.ryms.mathagoras.R;
 
 public class ClassRoom extends AppCompatActivity {
 

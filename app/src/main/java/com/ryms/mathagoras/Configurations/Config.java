@@ -1,4 +1,4 @@
-package com.ryms.mathagoras;
+package com.ryms.mathagoras.Configurations;
 
 public class Config {
     public static final String BASE_URL = "https://mathagoras-backend.herokuapp.com";

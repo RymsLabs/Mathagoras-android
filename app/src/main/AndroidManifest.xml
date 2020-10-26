@@ -12,13 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/MainTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ClassRoom"></activity>
-        <activity android:name=".DashBoard" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".Choice" />
-        <activity android:name=".OnBoardingActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".StudentClass.ClassRoom"></activity>
+        <activity android:name=".Dashb.DashBoard" />
+        <activity android:name=".ChoiceLoginSignup.SignUpActivity" />
+        <activity android:name=".ChoiceLoginSignup.LoginActivity" />
+        <activity android:name=".ChoiceLoginSignup.Choice" />
+        <activity android:name=".Onboard.OnBoardingActivity" />
+        <activity android:name=".Main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

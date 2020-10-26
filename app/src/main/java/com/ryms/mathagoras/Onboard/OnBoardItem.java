@@ -1,4 +1,4 @@
-package com.ryms.mathagoras;
+package com.ryms.mathagoras.Onboard;
 
 public class OnBoardItem
 {

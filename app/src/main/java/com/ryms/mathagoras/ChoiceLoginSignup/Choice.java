@@ -1,4 +1,4 @@
-package com.ryms.mathagoras;
+package com.ryms.mathagoras.ChoiceLoginSignup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.ryms.mathagoras.ChoiceLoginSignup.LoginActivity;
+import com.ryms.mathagoras.ChoiceLoginSignup.SignUpActivity;
+import com.ryms.mathagoras.R;
 
 public class Choice extends AppCompatActivity {
 

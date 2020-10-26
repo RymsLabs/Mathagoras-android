@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/welcome_gradient"
-    tools:context=".MainActivity">
+    tools:context=".Main.MainActivity">
 
     <ImageView
         android:id="@+id/imageView"

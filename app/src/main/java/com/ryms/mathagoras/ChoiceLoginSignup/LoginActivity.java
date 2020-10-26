@@ -1,4 +1,4 @@
-package com.ryms.mathagoras;
+package com.ryms.mathagoras.ChoiceLoginSignup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.ryms.mathagoras.Configurations.Config;
+import com.ryms.mathagoras.R;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -66,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // Creating a request obj to request to a url
-        Log.d("LOGIN",("Creating req with url: "+Config.STUDENT_LOGIN));
+        Log.d("LOGIN",("Creating req with url: "+ Config.STUDENT_LOGIN));
         Request request = new Request.Builder()
                 .header("Authorization", ("Basic "+base64))
                 .url(Config.STUDENT_LOGIN)

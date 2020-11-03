@@ -50,12 +50,12 @@
         android:inputType="textPersonName"
         android:textColor="#715BF0"
         android:textColorHint="#AFAFAF"
-        app:layout_constraintBottom_toTopOf="@+id/emailSign"
+        app:layout_constraintBottom_toTopOf="@+id/userid"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/emailSign"
+        android:id="@+id/userid"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="101dp"

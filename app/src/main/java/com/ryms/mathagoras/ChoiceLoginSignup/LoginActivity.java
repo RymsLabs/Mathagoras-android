@@ -2,6 +2,8 @@ package com.ryms.mathagoras.ChoiceLoginSignup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ryms.mathagoras.Configurations.Config;
+import com.ryms.mathagoras.Dashb.DashBoard;
 import com.ryms.mathagoras.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -25,23 +28,32 @@ import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText email;
-    EditText password;
+    EditText userid, password;
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        email = findViewById(R.id.emailSign);
+        userid = findViewById(R.id.userid);
         password = findViewById(R.id.passSign);
+
+        sp = getSharedPreferences("login", MODE_PRIVATE);
+        if(sp.getBoolean("logged", false)){
+            goToDashboard();
+        }
+    }
+    public void goToDashboard(){
+        Intent i = new Intent(this, DashBoard.class);
+        startActivity(i);
     }
 
     public void loginPressed(View view) {
         Log.d("LOGIN",("Login Pressed"));
-        String emailTxt = email.getText().toString();
+        String userId = userid.getText().toString();
         String passTxt = password.getText().toString();
 
-        if (emailTxt == null || passTxt == null || emailTxt == "" || passTxt == "") {
+        if (userId == null || passTxt == null || userId == "" || passTxt == "") {
             //TODO: Alert user to enter email/pass
             System.out.println("WRONG INPUTS");
             return;
@@ -50,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //TODO: Possibly do a better email validation or use an external library.
         OkHttpClient client = new OkHttpClient();
-        String plainAuth = emailTxt + ":" + passTxt;
+        String plainAuth = userId + ":" + passTxt;
         String base64 = null;
 
         try {
@@ -119,7 +131,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     System.out.println("Response received: ");
                     System.out.println(response.body().string());
-
+                    goToDashboard();
+                    sp.edit().putBoolean("logged",true).apply();
 //                    // IMPORTANT: TO UPDATE UI, USE THE FOLLOWING CODE, UI *MUST* ALWAYS BE UPDATED ON THE *MAIN THREAD*
 //                    LoginActivity.this.runOnUiThread(new Runnable() {
 //                        @Override

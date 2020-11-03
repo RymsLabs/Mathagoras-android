@@ -43,7 +43,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         userId = findViewById(R.id.userId);
         name = findViewById(R.id.name);
-        emailSign = findViewById(R.id.emailSign);
+        emailSign = findViewById(R.id.userid);
         passSign = findViewById(R.id.passSign);
         teacherSwitch = findViewById(R.id.teacherSwitch);
 

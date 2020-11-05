@@ -38,11 +38,14 @@ public class LoginActivity extends AppCompatActivity {
         userid = findViewById(R.id.userid);
         password = findViewById(R.id.passSign);
 
+
+
         sp = getSharedPreferences("login", MODE_PRIVATE);
         if(sp.getBoolean("logged", false)){
             goToDashboard();
         }
     }
+
     public void goToDashboard(){
         Intent i = new Intent(this, DashBoard.class);
         startActivity(i);
@@ -50,8 +53,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginPressed(View view) {
         Log.d("LOGIN",("Login Pressed"));
-        String userId = userid.getText().toString();
-        String passTxt = password.getText().toString();
+        final String userId = userid.getText().toString();
+        final String passTxt = password.getText().toString();
 
         if (userId == null || passTxt == null || userId == "" || passTxt == "") {
             //TODO: Alert user to enter email/pass
@@ -128,7 +131,11 @@ public class LoginActivity extends AppCompatActivity {
 
                     // Request was successful, save username and password in localstoreage (needed for subsequent requests)
                     // And go to Dashboard screen
-
+                    sp = getSharedPreferences("SETTING", 0);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("USERID", userId);
+                    editor.putString("PASSWORD", passTxt);
+                    editor.commit();
                     System.out.println("Response received: ");
                     System.out.println(response.body().string());
                     goToDashboard();

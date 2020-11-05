@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".Dashb.DashBoard">
+    tools:context=".Dashb.TeacherDash">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -52,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:fontFamily="@font/playfair_display_regular"
+        android:text="Teacher's Name"
         android:textColor="@color/darkTextColor"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,6 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_regular"
+        android:text="User Id"
         android:textColor="@color/darkTextColor"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,6 +84,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/teachName"
         app:srcCompat="@drawable/addclass" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

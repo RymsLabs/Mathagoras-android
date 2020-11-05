@@ -3,6 +3,7 @@ package com.ryms.mathagoras.ChoiceLoginSignup;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
     EditText userId, name, emailSign, passSign;
     Switch teacherSwitch;
     boolean isTeacher;
+    SharedPreferences sp;
 
 
     @Override
@@ -57,6 +59,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void signupPressed(View view) {
         JSONObject jsonBody = new JSONObject();
+        final String userid = userId.getText().toString();
+        final String userPass = passSign.getText().toString();
+        final String names = name.getText().toString();
         try {
             if (isTeacher) {
                 jsonBody.put("teacher_id", userId.getText().toString());
@@ -95,6 +100,13 @@ public class SignUpActivity extends AppCompatActivity {
                             String status = signUpResponse.getString("type");
                             Log.d("signup", status);
                             if (status.equals("success")) {
+                                sp = getSharedPreferences("SETTING", 0);
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.putString("USERID", userid);
+                                editor.putString("PASSWORD", userPass);
+                                editor.putString("NAME", names);
+                                editor.commit();
+                                sp.edit().putBoolean("logged",true).apply();
                                 Intent intent = new Intent(SignUpActivity.this, DashBoard.class);
                                 startActivity(intent);
                             } else {

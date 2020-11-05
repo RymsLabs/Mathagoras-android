@@ -36,23 +36,21 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class DashBoard extends AppCompatActivity {
+public class TeacherDash extends AppCompatActivity {
 
     MyAdapter myAdapter;
     ImageButton add;
     AlertDialog.Builder builder;
     SharedPreferences sp;
-    TextView stuid, stuname;
+    TextView teachId, teachName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dash_board);
+        setContentView(R.layout.activity_teacher_dash);
 
         add = (ImageButton) findViewById(R.id.add);
         builder = new AlertDialog.Builder(this);
-
-        //TODO: Add course
         LayoutInflater li = LayoutInflater.from(getApplicationContext());
         final View promptsView = li.inflate(R.layout.alert_dialog, null);
         builder.setView(promptsView);
@@ -100,13 +98,13 @@ public class DashBoard extends AppCompatActivity {
         sp = getSharedPreferences("SETTING", 0);
         String userID = sp.getString("USERID", "");
         String password= sp.getString("PASSWORD", "");
-        String name= sp.getString("NAME", "");
+        String name = sp.getString("NAME", "");
 
-        stuid = findViewById(R.id.teachId);
-        stuname = findViewById(R.id.teachName);
+        teachId = findViewById(R.id.teachId);
+        teachName = findViewById(R.id.teachName);
 
-        stuid.setText(userID);
-        stuname.setText(name);
+        teachId.setText(userID);
+        teachName.setText(name);
 
         String plainAuth = userID + ":" + password;
         String base64 = null;
@@ -148,11 +146,11 @@ public class DashBoard extends AppCompatActivity {
                 }
                 if (response.code() != 200) {
                     final JSONObject finalJsonObject = jsonObject;
-                    DashBoard.this.runOnUiThread(new Runnable() {
+                    TeacherDash.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             try {
-                                Toast.makeText(DashBoard.this, finalJsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                                Toast.makeText(TeacherDash.this, finalJsonObject.getString("message"), Toast.LENGTH_LONG).show();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -173,7 +171,7 @@ public class DashBoard extends AppCompatActivity {
                         model.setImage(R.drawable.shadowfight);
                         modelArrayList.add(model);
                     }
-                    DashBoard.this.runOnUiThread(new Runnable() {
+                    TeacherDash.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             myAdapter.notifyDataSetChanged();
@@ -186,3 +184,4 @@ public class DashBoard extends AppCompatActivity {
         });
     }
 }
+

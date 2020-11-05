@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/MainTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".StudentClass.ClassRoom"></activity>
+        <activity android:name=".Dashb.TeacherDash"></activity>
+        <activity android:name=".StudentClass.ClassRoom" />
         <activity android:name=".Dashb.DashBoard" />
         <activity android:name=".ChoiceLoginSignup.SignUpActivity" />
         <activity android:name=".ChoiceLoginSignup.LoginActivity" />

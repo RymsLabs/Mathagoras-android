@@ -16,6 +16,8 @@ import com.ryms.mathagoras.Dashb.DashBoard;
 import com.ryms.mathagoras.R;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -135,9 +137,16 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString("USERID", userId);
                     editor.putString("PASSWORD", passTxt);
+                    JSONObject jsonresponse = null;
+                    try {
+                        jsonresponse = new JSONObject(response.body().string());
+                        editor.putString("NAME", jsonresponse.getJSONObject("student").getString("fname"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     editor.commit();
                     System.out.println("Response received: ");
-                    System.out.println(response.body().string());
+                    System.out.println(jsonresponse.toString());
                     goToDashboard();
                     sp.edit().putBoolean("logged",true).apply();
 //                    // IMPORTANT: TO UPDATE UI, USE THE FOLLOWING CODE, UI *MUST* ALWAYS BE UPDATED ON THE *MAIN THREAD*

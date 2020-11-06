@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/teachId"
+        app:layout_constraintTop_toBottomOf="@+id/Id"
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
@@ -47,12 +47,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/teachName"
+        android:id="@+id/Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:fontFamily="@font/playfair_display_regular"
-        android:text="Teacher's Name"
         android:textColor="@color/darkTextColor"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,17 +59,16 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
-        android:id="@+id/teachId"
+        android:id="@+id/Id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_regular"
-        android:text="User Id"
         android:textColor="@color/darkTextColor"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/teachName" />
+        app:layout_constraintTop_toBottomOf="@+id/Name" />
 
     <ImageButton
         android:id="@+id/add"
@@ -82,7 +80,7 @@
         android:background="@color/background"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/teachName"
+        app:layout_constraintStart_toEndOf="@+id/Name"
         app:srcCompat="@drawable/addclass" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

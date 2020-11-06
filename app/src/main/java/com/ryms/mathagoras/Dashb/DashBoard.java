@@ -6,17 +6,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ryms.mathagoras.ChoiceLoginSignup.SignUpActivity;
 import com.ryms.mathagoras.Configurations.Config;
 import com.ryms.mathagoras.R;
 
@@ -32,11 +35,15 @@ import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class DashBoard extends AppCompatActivity {
+
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     MyAdapter myAdapter;
     ImageButton add;
@@ -49,29 +56,28 @@ public class DashBoard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
 
+        sp = getSharedPreferences("SETTING", 0);
         add = (ImageButton) findViewById(R.id.add);
         builder = new AlertDialog.Builder(this);
 
-        //TODO: Add course
-        LayoutInflater li = LayoutInflater.from(getApplicationContext());
-        final View promptsView = li.inflate(R.layout.alert_dialog, null);
-        builder.setView(promptsView);
+        final String userID = sp.getString("USERID", "");
+        final String password = sp.getString("PASSWORD", "");
+        final String name = sp.getString("NAME", "");
+
+        /** requests courses already enrolled from the server */
+        getCourses(userID, password, name);
+
+        final LayoutInflater li = LayoutInflater.from(getApplicationContext());
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                View promptsView = li.inflate(R.layout.alert_dialog, null);
+                builder.setView(promptsView);
                 final EditText joinCode = (EditText) promptsView.findViewById(R.id.joinCode);
-                builder
-                        .setCancelable(false)
+                builder.setCancelable(false)
                         .setPositiveButton("Join", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Toast.makeText(getApplicationContext(),"clicked",
-                                        Toast.LENGTH_SHORT).show();
-                                JSONObject jsonBody = new JSONObject();
-                                try {
-                                    JSONObject courseId = jsonBody.put("courseId", joinCode.getText().toString());
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                                JoinCourse(userID, password, joinCode.getText().toString(), name);
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -84,29 +90,24 @@ public class DashBoard extends AppCompatActivity {
                 alert.show();
             }
         });
+    }
 
-        final ArrayList<Model> modelArrayList = new ArrayList<>();
-        RecyclerView recyclerView;
-
-        recyclerView = findViewById(R.id.recyclerView);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-
-        myAdapter = new MyAdapter(modelArrayList);
-        recyclerView.setAdapter(myAdapter);
+    public void getCourses(String userID, String password, String name) {
 
         OkHttpClient client = new OkHttpClient();
 
-        sp = getSharedPreferences("SETTING", 0);
-        String userID = sp.getString("USERID", "");
-        String password= sp.getString("PASSWORD", "");
-        String name= sp.getString("NAME", "");
-
-        stuid = findViewById(R.id.teachId);
-        stuname = findViewById(R.id.teachName);
-
+        final ArrayList<Model> modelArrayList = new ArrayList<>();
+        stuid = findViewById(R.id.Id);
+        stuname = findViewById(R.id.Name);
         stuid.setText(userID);
         stuname.setText(name);
+
+        RecyclerView recyclerView;
+        recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        myAdapter = new MyAdapter(modelArrayList);
+        recyclerView.setAdapter(myAdapter);
 
         String plainAuth = userID + ":" + password;
         String base64 = null;
@@ -114,20 +115,18 @@ public class DashBoard extends AppCompatActivity {
         byte[] data = plainAuth.getBytes(StandardCharsets.UTF_8);
         base64 = Base64.encodeToString(data, Base64.NO_WRAP);
 
-
         if (base64 == null) {
-            // Hopefully will never be called
+            /** Hopefully will never be called */
             throw new Error("Unexpectedly found base64 null during login");
         }
 
-        // Creating a request obj to request to a url
+        /** Creating a request obj to request to a url */
         Request request = new Request.Builder()
                 .header("Authorization", ("Basic " + base64))
                 .url(Config.GET_COURSES)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
-
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 if (e instanceof UnknownHostException) {
@@ -182,6 +181,65 @@ public class DashBoard extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+    }
+
+    public void JoinCourse(final String userID, final String password, final String joinCode, final String name) {
+
+        OkHttpClient client = new OkHttpClient();
+
+        String plainAuth = userID + ":" + password;
+        String base64 = null;
+
+        byte[] data = plainAuth.getBytes(StandardCharsets.UTF_8);
+        base64 = Base64.encodeToString(data, Base64.NO_WRAP);
+
+        if (base64 == null) {
+            throw new Error("Unexpectedly found base64 null during login");
+        }
+
+        JSONObject reqjson = new JSONObject();
+        String requestUrl = Config.ENROLL_COURSES;
+        try {
+            reqjson.put("courseId", joinCode);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(String.valueOf(reqjson), JSON);
+        Request request = new Request.Builder()
+                .header("Authorization", ("Basic "+base64))
+                .url(requestUrl)
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String myres = response.body().string();
+                Log.d("JOIN_RES", myres);
+                DashBoard.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject joinCourse = new JSONObject(myres);
+                            String status = joinCourse.getString("type");
+                            if (status.equals("success")) {
+                                Toast.makeText(getApplicationContext(), "Joined", Toast.LENGTH_SHORT).show();
+                                getCourses(userID, password, name);
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Error: " +joinCourse.getString("message"), Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }

@@ -12,5 +12,5 @@ public class Config {
 
     public static final String GET_COURSES = BASE_URL+"/courseStudent";
     public static final String ADD_COURSES = BASE_URL+"/course";
-    public static final String ENROLL_COURSES = BASE_URL+"/courseStudent/enroll";
+    public static final String ENROLL_COURSES = BASE_URL+"/courseStudent/enroll/";
 }

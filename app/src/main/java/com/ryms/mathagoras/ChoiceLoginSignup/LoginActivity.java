@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.ryms.mathagoras.Configurations.Config;
 import com.ryms.mathagoras.Dashb.DashBoard;
+import com.ryms.mathagoras.Dashb.TeacherDash;
 import com.ryms.mathagoras.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -32,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText userid, password;
     SharedPreferences sp;
+    Switch teacherSwitch;
+    boolean isTeacher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +44,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         userid = findViewById(R.id.userid);
         password = findViewById(R.id.passSign);
+        teacherSwitch = findViewById(R.id.teacherSwitchLogin);
 
-
+        teacherSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isTeacher = isChecked;
+            }
+        });
 
         sp = getSharedPreferences("login", MODE_PRIVATE);
         if(sp.getBoolean("logged", false)){
@@ -49,8 +59,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void goToDashboard(){
-        Intent i = new Intent(this, DashBoard.class);
-        startActivity(i);
+        if(isTeacher == true) {
+            Intent i = new Intent(this, TeacherDash.class);
+            startActivity(i);
+        }
+        else{
+            Intent i = new Intent(this, DashBoard.class);
+            startActivity(i);
+        }
     }
 
     public void loginPressed(View view) {
@@ -86,26 +102,26 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // Creating a request obj to request to a url
+        String requestUrl = isTeacher? Config.TEACHER_LOGIN:Config.STUDENT_LOGIN;
         Log.d("LOGIN",("Creating req with url: "+ Config.STUDENT_LOGIN));
         Request request = new Request.Builder()
                 .header("Authorization", ("Basic "+base64))
-                .url(Config.STUDENT_LOGIN)
+                .url(requestUrl)
                 .build();
 
-//        // This is how we make a synchronous network call.
-//        // We'll be doing asynchronous network calls though so as not to freeze the UI while we wait for the network result.
-//
-//        try {
-//            Response response = client.newCall(request).execute();
-//        } catch (ConnectException e) {
-//            // Alert User, Server might be down.
-//            System.out.println("Error connecting to Server.");
-//            e.printStackTrace();
-//        }
-//        catch (Exception e) {
-//            System.out.println("Error executing login HTTP req.: ");
-//            e.printStackTrace();
-//        }
+/**     This is how we make a synchronous network call.
+        We'll be doing asynchronous network calls though so as not to freeze the UI while we wait for the network result.
+        try {
+            Response response = client.newCall(request).execute();
+        } catch (ConnectException e) {
+            // Alert User, Server might be down.
+            System.out.println("Error connecting to Server.");
+            e.printStackTrace();
+        }
+       catch (Exception e) {
+            System.out.println("Error executing login HTTP req.: ");
+            e.printStackTrace();
+        }*/
 
         client.newCall(request).enqueue(new Callback() {
             
@@ -147,8 +163,8 @@ public class LoginActivity extends AppCompatActivity {
                     editor.commit();
                     System.out.println("Response received: ");
                     System.out.println(jsonresponse.toString());
+                    sp.edit().putBoolean("logged",true).commit();
                     goToDashboard();
-                    sp.edit().putBoolean("logged",true).apply();
 //                    // IMPORTANT: TO UPDATE UI, USE THE FOLLOWING CODE, UI *MUST* ALWAYS BE UPDATED ON THE *MAIN THREAD*
 //                    LoginActivity.this.runOnUiThread(new Runnable() {
 //                        @Override

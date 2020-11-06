@@ -68,13 +68,14 @@ public class TeacherDash extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                View promptsView = li.inflate(R.layout.alert_dialog, null);
+                View promptsView = li.inflate(R.layout.alert_dialog_teacher, null);
                 builder.setView(promptsView);
-                final EditText joinCode = (EditText) promptsView.findViewById(R.id.joinCode);
+                final EditText courseName = (EditText) promptsView.findViewById(R.id.courseName);
+                final EditText description = (EditText) promptsView.findViewById(R.id.descrip);
                 builder.setCancelable(false)
-                        .setPositiveButton("Join", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                JoinCourse(userID, password, joinCode.getText().toString(), name);
+                                AddCourse(userID, password, courseName.getText().toString(), description.getText().toString(), name);
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -83,7 +84,7 @@ public class TeacherDash extends AppCompatActivity {
                             }
                         });
                 AlertDialog alert = builder.create();
-                alert.setTitle("Join Code");
+                alert.setTitle("Add Course");
                 alert.show();
             }
         });
@@ -120,7 +121,7 @@ public class TeacherDash extends AppCompatActivity {
         /** Creating a request obj to request to a url */
         Request request = new Request.Builder()
                 .header("Authorization", ("Basic " + base64))
-                .url(Config.GET_COURSES)
+                .url(Config.GET_COURSES_TEACHER)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -158,13 +159,13 @@ public class TeacherDash extends AppCompatActivity {
                 JSONArray courses;
                 try {
                     Log.d("JSON", jsonObject.toString());
-                    courses = jsonObject.getJSONArray("enrolled");
+                    courses = jsonObject.getJSONArray("courses");
                     JSONObject temp;
                     for (int i = 0; i < courses.length(); i++) {
                         temp = courses.getJSONObject(i);
                         Model model = new Model();
                         model.cname = temp.getString("name");
-                        model.tname = temp.getString("teacher_name");
+                        model.tname = temp.getString("course_id");
                         model.description = temp.getString("description");
                         model.setImage(R.drawable.shadowfight);
                         modelArrayList.add(model);
@@ -182,7 +183,7 @@ public class TeacherDash extends AppCompatActivity {
         });
     }
 
-    public void JoinCourse(final String userID, final String password, final String joinCode, final String name) {
+    public void AddCourse(final String userID, final String password, final String courseName, final String description, final String name) {
 
         OkHttpClient client = new OkHttpClient();
 
@@ -197,9 +198,10 @@ public class TeacherDash extends AppCompatActivity {
         }
 
         JSONObject reqjson = new JSONObject();
-        String requestUrl = Config.ENROLL_COURSES;
+        String requestUrl = Config.ADD_COURSES;
         try {
-            reqjson.put("courseId", joinCode);
+            reqjson.put("courseName", courseName);
+            reqjson.put("description", description);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -226,7 +228,7 @@ public class TeacherDash extends AppCompatActivity {
                             JSONObject joinCourse = new JSONObject(myres);
                             String status = joinCourse.getString("type");
                             if (status.equals("success")) {
-                                Toast.makeText(getApplicationContext(), "Joined", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Created", Toast.LENGTH_SHORT).show();
                                 getCourses(userID, password, name);
 
                             } else {

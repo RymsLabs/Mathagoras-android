@@ -56,11 +56,15 @@ public class ClassRoom extends AppCompatActivity {
     AlertDialog.Builder builder;
     SharedPreferences sp;
     TextView stuid, stuname;
+    String cid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_classroom);
+
+        Bundle bundle = getIntent().getExtras();
+        cid = bundle.getString("cid");
 
         sp = getSharedPreferences("SETTING", 0);
         builder = new AlertDialog.Builder(this);
@@ -98,7 +102,7 @@ public class ClassRoom extends AppCompatActivity {
         /** Creating a request obj to request to a url */
         Request request = new Request.Builder()
                 .header("Authorization", ("Basic " + base64))
-                .url(Config.GET_CLASSES)
+                .url(Config.GET_CLASS+cid)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -136,43 +140,54 @@ public class ClassRoom extends AppCompatActivity {
                 JSONObject classes;
                 try {
                     Log.d("JSON", jsonObject.toString());
-                    classes = jsonObject.getJSONArray("classes").getJSONObject(0);
-
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd");
-                    String from = classes.getString("from").split("T")[0];
-                    String till = classes.getString("till").split("T")[0];
-
-                    String[] inpt1 = from.split("-");
-                    String[] inpt2 = till.split("-");
-
-                    LocalDate date1 = LocalDate.of(Integer.parseInt(inpt1[0]), Integer.parseInt(inpt1[1]), Integer.parseInt(inpt1[2]));
-                    LocalDate date2 = LocalDate.of(Integer.parseInt(inpt2[0]), Integer.parseInt(inpt2[1]), Integer.parseInt(inpt2[2]));
-
-                    long daysBetween = ChronoUnit.DAYS.between(date1,date2);
-                    System.out.println ("Days: " + daysBetween);
-
-                    for (int i = 0; i < daysBetween; i++) {
-                        int daysToIncrement = 0;
-                        ClassModel model = new ClassModel();
-                        String[] d = inpt1;
-
-                        LocalDate temp = date1.plusDays(i);
-
-                        model.date = temp.getDayOfMonth();
-                        model.month = temp.getMonth().name();
-                        model.day = temp.getDayOfWeek().name();
-                        model.time = classes.getString("start_time") + " to " + classes.getString("end_time");
-                        model.setImage(R.drawable.shadowfight);
-                        modelArrayList.add(model);
+                    JSONArray temp1 = jsonObject.getJSONArray("classes");
+                    if(temp1.length()==0){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "No Class is scheduled", Toast.LENGTH_LONG).show();
+                            }
+                        });
                     }
+                    else {
+                        classes = temp1.getJSONObject(0);
 
-                    ClassRoom.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            calenderAdapter.notifyDataSetChanged();
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+                        String from = classes.getString("from").split("T")[0];
+                        String till = classes.getString("till").split("T")[0];
+
+                        String[] inpt1 = from.split("-");
+                        String[] inpt2 = till.split("-");
+
+                        LocalDate date1 = LocalDate.of(Integer.parseInt(inpt1[0]), Integer.parseInt(inpt1[1]), Integer.parseInt(inpt1[2]));
+                        LocalDate date2 = LocalDate.of(Integer.parseInt(inpt2[0]), Integer.parseInt(inpt2[1]), Integer.parseInt(inpt2[2]));
+
+                        long daysBetween = ChronoUnit.DAYS.between(date1, date2);
+                        System.out.println("Days: " + daysBetween);
+
+                        for (int i = 0; i < daysBetween; i++) {
+                            ClassModel model = new ClassModel();
+                            String[] d = inpt1;
+
+                            LocalDate temp = date1.plusDays(i);
+
+                            model.date = temp.getDayOfMonth();
+                            model.month = temp.getMonth().name();
+                            model.day = temp.getDayOfWeek().name();
+                            model.time = classes.getString("start_time") + " to " + classes.getString("end_time");
+                            model.setImage(R.drawable.shadowfight);
+                            modelArrayList.add(model);
                         }
-                    });
-                } catch (JSONException e) {
+
+                        ClassRoom.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                calenderAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                }
+                catch (JSONException e) {
                     e.printStackTrace();
                 }
             }

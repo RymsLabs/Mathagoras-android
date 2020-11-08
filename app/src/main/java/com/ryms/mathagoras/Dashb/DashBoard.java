@@ -169,6 +169,7 @@ public class DashBoard extends AppCompatActivity {
                         model.cname = temp.getString("name");
                         model.tname = temp.getString("teacher_name");
                         model.description = temp.getString("description");
+                        model.cid = temp.getString("course_id");
                         model.setImage(R.drawable.shadowfight);
                         modelArrayList.add(model);
                     }

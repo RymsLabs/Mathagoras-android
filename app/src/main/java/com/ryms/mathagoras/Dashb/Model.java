@@ -3,7 +3,7 @@ package com.ryms.mathagoras.Dashb;
 public class Model {
 
     private int image;
-    public String cname, tname, description;
+    public String cname, tname, description, cid;
     public int getImage() {
         return image;
     }

@@ -44,7 +44,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final MyHolder holder, int position) {
+    public void onBindViewHolder(final MyHolder holder, final int position) {
         holder.imageView.setImageResource(modelArrayList.get(position).getImage());
         holder.cname.setText(modelArrayList.get(position).cname);
         holder.tname.setText(modelArrayList.get(position).tname);
@@ -54,7 +54,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
             @Override
             public void onClick(View v) {
                 Intent intent =  new Intent(holder.imageView.getContext(), ClassRoom.class);
+                intent.putExtra("cid", modelArrayList.get(position).cid);
                 holder.imageView.getContext().startActivity(intent);
+
             }
         });
     }

@@ -16,4 +16,6 @@ public class Config {
     public static final String STUDENT_SIGNUP = STUDENT_ROUTE+"/signup";
     public static final String GET_COURSES = BASE_URL+"/courseStudent";
     public static final String ENROLL_COURSES = BASE_URL+"/courseStudent/enroll/";
+
+    public static final String GET_CLASSES = BASE_URL+"/class/all";
 }

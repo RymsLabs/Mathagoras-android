@@ -59,7 +59,7 @@ public class TeacherDash extends AppCompatActivity {
 
         final String userID = sp.getString("USERID", "");
         final String password = sp.getString("PASSWORD", "");
-        final String name = sp.getString("NAME", "");
+        final String name = sp.getString("NAMET", "");
 
         /** requests courses already enrolled from the server */
         getCourses(userID, password, name);

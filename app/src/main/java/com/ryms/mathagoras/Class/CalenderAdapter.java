@@ -1,5 +1,6 @@
 package com.ryms.mathagoras.Class;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ryms.mathagoras.Dashb.Model;
+import com.ryms.mathagoras.Discussion.Discussion;
 import com.ryms.mathagoras.R;
 
 import java.util.ArrayList;
@@ -45,12 +46,20 @@ public class CalenderAdapter extends RecyclerView.Adapter<CalenderAdapter.MyHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyHolder holder, int position) {
         holder.imageView.setImageResource(modelArrayList.get(position).getImage());
         holder.month.setText(modelArrayList.get(position).month);
-        holder.date.setText(modelArrayList.get(position).date);
+        holder.date.setText(String.valueOf(modelArrayList.get(position).date));
         holder.time.setText(modelArrayList.get(position).time);
         holder.day.setText(modelArrayList.get(position).day);
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =  new Intent(holder.imageView.getContext(), Discussion.class);
+                holder.imageView.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

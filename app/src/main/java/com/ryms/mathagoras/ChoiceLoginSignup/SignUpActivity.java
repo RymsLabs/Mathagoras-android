@@ -104,7 +104,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sp.edit();
                                 editor.putString("USERID", userid);
                                 editor.putString("PASSWORD", userPass);
-                                editor.putString("NAME", names);
+                                editor.putString("NAMET", names);
                                 editor.commit();
                                 sp.edit().putBoolean("logged",true).apply();
                                 Intent intent = new Intent(SignUpActivity.this, DashBoard.class);

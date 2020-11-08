@@ -13,8 +13,8 @@
         android:theme="@style/MainTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".Dashb.TeacherDash"></activity>
-        <activity android:name=".StudentClass.ClassRoom" />
-        <activity android:name=".Dashb.DashBoard" />
+        <activity android:name=".Class.ClassRoom" android:exported="true"/>
+        <activity android:name=".Dashb.DashBoard" android:exported="true"/>
         <activity android:name=".ChoiceLoginSignup.SignUpActivity" />
         <activity android:name=".ChoiceLoginSignup.LoginActivity" />
         <activity android:name=".ChoiceLoginSignup.Choice" />

@@ -207,7 +207,7 @@ public class TeacherDash extends AppCompatActivity {
         }
         RequestBody body = RequestBody.create(String.valueOf(reqjson), JSON);
         Request request = new Request.Builder()
-                .header("Authorization", ("Basic "+base64))
+                .header("Authorization", ("Basic " + base64))
                 .url(requestUrl)
                 .post(body)
                 .build();
@@ -232,7 +232,7 @@ public class TeacherDash extends AppCompatActivity {
                                 getCourses(userID, password, name);
 
                             } else {
-                                Toast.makeText(getApplicationContext(), "Error: " +joinCourse.getString("message"), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Error: " + joinCourse.getString("message"), Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ryms.mathagoras.Discussion.Discussion;
+import com.ryms.mathagoras.Options.Options;
 import com.ryms.mathagoras.R;
 
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ public class CalenderAdapter extends RecyclerView.Adapter<CalenderAdapter.MyHold
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =  new Intent(holder.imageView.getContext(), Discussion.class);
+                Intent intent =  new Intent(holder.imageView.getContext(), Options.class);
                 holder.imageView.getContext().startActivity(intent);
             }
         });

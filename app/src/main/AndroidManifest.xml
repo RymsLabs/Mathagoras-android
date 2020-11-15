@@ -12,7 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/MainTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Discussion.Discussion"></activity>
+        <activity android:name=".Options.Options"
+            android:exported="true"></activity>
+        <activity
+            android:name=".Discussion.Discussion"
+            android:exported="true" />
         <activity android:name=".Dashb.TeacherDash" />
         <activity
             android:name=".Class.ClassRoom"

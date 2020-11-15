@@ -52,10 +52,8 @@ public class ClassRoom extends AppCompatActivity {
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     CalenderAdapter calenderAdapter;
-    ImageButton discussion;
     AlertDialog.Builder builder;
     SharedPreferences sp;
-    TextView stuid, stuname;
     String cid;
 
     @Override

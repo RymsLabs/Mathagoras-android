@@ -33,6 +33,7 @@ import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Discussion extends AppCompatActivity {
@@ -68,7 +69,7 @@ public class Discussion extends AppCompatActivity {
         final String password = sp.getString("PASSWORD", "");
 
         message = (EditText) findViewById(R.id.message);
-        typed = message.toString();
+        typed = message.getText().toString();
 
         send = (ImageButton) findViewById(R.id.send);
         getAllMessages(userID, password);
@@ -84,6 +85,8 @@ public class Discussion extends AppCompatActivity {
 
     public void getAllMessages(String userID, String password) {
 
+        modelArrayList.clear();
+
         OkHttpClient client = new OkHttpClient();
 
         String plainAuth = userID + ":" + password;
@@ -163,7 +166,9 @@ public class Discussion extends AppCompatActivity {
         });
     }
 
-    public void sendMessage(String userID, String password) {
+    public void sendMessage(final String userID, final String password) {
+
+        typed = message.getText().toString();
 
         OkHttpClient client = new OkHttpClient();
 
@@ -177,11 +182,20 @@ public class Discussion extends AppCompatActivity {
             /** Hopefully will never be called */
             throw new Error("Unexpectedly found base64 null during login");
         }
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("discussionId", discussionId);
+            jsonBody.put("message", typed);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         /** Creating a request obj to request to a url */
+        RequestBody body = RequestBody.create(String.valueOf(jsonBody), JSON);
         Request request = new Request.Builder()
                 .header("Authorization", ("Basic " + base64))
-                .url(Config.GET_ALL_MESSAGES+discussionId)
+                .url(Config.SEND_MESSAGES)
+                .post(body)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -216,30 +230,7 @@ public class Discussion extends AppCompatActivity {
                         }
                     });
                 }
-                JSONArray messages;
-                try {
-                    Log.d("JSON", jsonObject.toString());
-                    messages = jsonObject.getJSONArray("messages");
-                    JSONObject temp;
-                    for (int i = 0; i < messages.length(); i++) {
-                        temp = messages.getJSONObject(i);
-                        DissModel model = new DissModel();
-                        model.user = temp.getString("user_id");
-                        model.date_time = temp.getString("message_time");
-                        model.userType = temp.getString("user_type");
-                        model.mess_age = temp.getString("message");
-                        model.setImage(R.drawable.shadowfight);
-                        modelArrayList.add(model);
-                    }
-                    Discussion.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            dissAdapter.notifyDataSetChanged();
-                        }
-                    });
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                getAllMessages(userID, password);
             }
         });
     }

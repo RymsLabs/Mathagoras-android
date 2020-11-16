@@ -46,7 +46,7 @@ public class CalenderAdapter extends RecyclerView.Adapter<CalenderAdapter.MyHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyHolder holder, final int position) {
         holder.imageView.setImageResource(modelArrayList.get(position).getImage());
         holder.month.setText(modelArrayList.get(position).month);
         holder.date.setText(String.valueOf(modelArrayList.get(position).date));
@@ -57,6 +57,7 @@ public class CalenderAdapter extends RecyclerView.Adapter<CalenderAdapter.MyHold
             @Override
             public void onClick(View v) {
                 Intent intent =  new Intent(holder.imageView.getContext(), Options.class);
+                //intent.putExtra("dcid", modelArrayList.get(position).cid);
                 holder.imageView.getContext().startActivity(intent);
             }
         });

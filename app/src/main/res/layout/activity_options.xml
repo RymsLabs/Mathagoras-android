@@ -34,18 +34,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/discussionInt"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginBottom="68dp"
-        android:background="#ffffff"
-        android:src="@drawable/classdiscussions"
-        app:layout_constraintBottom_toTopOf="@+id/teamsInt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageButton
         android:id="@+id/imageButton5"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -61,11 +49,23 @@
         android:id="@+id/teamsInt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="350dp"
+        android:layout_marginBottom="424dp"
         android:background="#ffffff"
         android:text="Teams integration"
         android:textColor="@color/darkTextColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/DissView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teamsInt" />
 </androidx.constraintlayout.widget.ConstraintLayout>

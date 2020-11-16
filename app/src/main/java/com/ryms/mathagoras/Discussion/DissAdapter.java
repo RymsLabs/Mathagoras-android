@@ -18,12 +18,15 @@ public class DissAdapter extends RecyclerView.Adapter<DissAdapter.MyHolder> {
     public ArrayList<DissModel> modelArrayList = new ArrayList<>();
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        public TextView messageSent;
+        public TextView user, date_time, userType, mess_age;
         public ImageView imageView;
 
         public MyHolder(View view) {
             super(view);
-            messageSent = (TextView) view.findViewById(R.id.messageSent);
+            user = (TextView) view.findViewById(R.id.user);
+            date_time = (TextView) view.findViewById(R.id.date_time);
+            userType = (TextView) view.findViewById(R.id.userType);
+            mess_age = (TextView) view.findViewById(R.id.mess_age);
             this.imageView = view.findViewById(R.id.backTile);
         }
 
@@ -43,7 +46,10 @@ public class DissAdapter extends RecyclerView.Adapter<DissAdapter.MyHolder> {
     @Override
     public void onBindViewHolder(@NonNull final MyHolder holder, int position) {
         holder.imageView.setImageResource(modelArrayList.get(position).getImage());
-        holder.messageSent.setText(modelArrayList.get(position).messageSent);
+        holder.user.setText(modelArrayList.get(position).user);
+        holder.date_time.setText(modelArrayList.get(position).date_time);
+        holder.userType.setText(modelArrayList.get(position).userType);
+        holder.mess_age.setText(modelArrayList.get(position).mess_age);
     }
 
     @Override

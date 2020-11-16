@@ -15,9 +15,11 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.ryms.mathagoras.Configurations.Config;
+import com.ryms.mathagoras.Options.OptionsModel;
 import com.ryms.mathagoras.R;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,7 +42,7 @@ public class Discussion extends AppCompatActivity {
     DissAdapter dissAdapter;
     AlertDialog.Builder builder;
     SharedPreferences sp;
-    String typed;
+    String typed, discussionId;
     EditText message;
     ImageButton send;
 
@@ -48,6 +50,9 @@ public class Discussion extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discussion);
+
+        Bundle bundle = getIntent().getExtras();
+        discussionId = bundle.getString("discussionId");
 
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.recyclerView);
@@ -66,15 +71,18 @@ public class Discussion extends AppCompatActivity {
         typed = message.toString();
 
         send = (ImageButton) findViewById(R.id.send);
+        getAllMessages(userID, password);
+
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendMessages(userID, password, typed);
+                sendMessage(userID, password);
             }
         });
+
     }
 
-    public void sendMessages(String userID, String password, String typed) {
+    public void getAllMessages(String userID, String password) {
 
         OkHttpClient client = new OkHttpClient();
 
@@ -92,7 +100,7 @@ public class Discussion extends AppCompatActivity {
         /** Creating a request obj to request to a url */
         Request request = new Request.Builder()
                 .header("Authorization", ("Basic " + base64))
-                .url(Config.SEND_MESSAGES)
+                .url(Config.GET_ALL_MESSAGES+discussionId)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -127,21 +135,111 @@ public class Discussion extends AppCompatActivity {
                         }
                     });
                 }
-                Log.d("JSON", jsonObject.toString());
-                JSONObject jsonBody = new JSONObject();
-                DissModel model = new DissModel();
-
-                model.messageSent = message.getText().toString();
-                model.setImage(R.drawable.shadowfight);
-                modelArrayList.add(model);
-
-                Discussion.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        dissAdapter.notifyDataSetChanged();
+                JSONArray messages;
+                try {
+                    Log.d("JSON", jsonObject.toString());
+                    messages = jsonObject.getJSONArray("messages");
+                    JSONObject temp;
+                    for (int i = 0; i < messages.length(); i++) {
+                        temp = messages.getJSONObject(i);
+                        DissModel model = new DissModel();
+                        model.user = temp.getString("user_id");
+                        model.date_time = temp.getString("message_time");
+                        model.userType = temp.getString("user_type");
+                        model.mess_age = temp.getString("message");
+                        model.setImage(R.drawable.shadowfight);
+                        modelArrayList.add(model);
                     }
-                });
+                    Discussion.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            dissAdapter.notifyDataSetChanged();
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
+    public void sendMessage(String userID, String password) {
+
+        OkHttpClient client = new OkHttpClient();
+
+        String plainAuth = userID + ":" + password;
+        String base64 = null;
+
+        byte[] data = plainAuth.getBytes(StandardCharsets.UTF_8);
+        base64 = Base64.encodeToString(data, Base64.NO_WRAP);
+
+        if (base64 == null) {
+            /** Hopefully will never be called */
+            throw new Error("Unexpectedly found base64 null during login");
+        }
+
+        /** Creating a request obj to request to a url */
+        Request request = new Request.Builder()
+                .header("Authorization", ("Basic " + base64))
+                .url(Config.GET_ALL_MESSAGES+discussionId)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                if (e instanceof UnknownHostException) {
+                    System.out.println("Please check your Internet connection.");
+                } else {
+                    System.out.println("Error executing login HTTP req.: ");
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response.body().string());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (response.code() != 200) {
+                    final JSONObject finalJsonObject = jsonObject;
+                    Discussion.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Toast.makeText(Discussion.this, finalJsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+                JSONArray messages;
+                try {
+                    Log.d("JSON", jsonObject.toString());
+                    messages = jsonObject.getJSONArray("messages");
+                    JSONObject temp;
+                    for (int i = 0; i < messages.length(); i++) {
+                        temp = messages.getJSONObject(i);
+                        DissModel model = new DissModel();
+                        model.user = temp.getString("user_id");
+                        model.date_time = temp.getString("message_time");
+                        model.userType = temp.getString("user_type");
+                        model.mess_age = temp.getString("message");
+                        model.setImage(R.drawable.shadowfight);
+                        modelArrayList.add(model);
+                    }
+                    Discussion.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            dissAdapter.notifyDataSetChanged();
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

@@ -4,6 +4,7 @@ public class ClassModel {
 
     private int image;
     public String month, time, day, cid;
+    public String rawDate;
     public int date;
     public int getImage() {
         return image;

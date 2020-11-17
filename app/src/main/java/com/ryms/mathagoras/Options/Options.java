@@ -55,6 +55,7 @@ public class Options extends AppCompatActivity {
     SharedPreferences sp;
     Button teamsInt;
     String cid;
+    String time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +63,9 @@ public class Options extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
-//        Bundle bundle = getIntent().getExtras();
-//        cid = bundle.getString("dcid");
+        Bundle bundle = getIntent().getExtras();
+        time = bundle.getString("TIME");
+        //        cid = bundle.getString("dcid");
 //        Log.d("cid", cid);
 
         teamsInt = (Button) findViewById(R.id.teamsInt);
@@ -115,7 +117,7 @@ public class Options extends AppCompatActivity {
         }
         JSONObject jsonBody = new JSONObject();
         try {
-            jsonBody.put("classDate", "2020-09-01 08:30:00");
+            jsonBody.put("classDate", time);
         } catch (JSONException e) {
             e.printStackTrace();
         }

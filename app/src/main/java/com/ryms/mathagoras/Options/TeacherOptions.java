@@ -48,11 +48,15 @@ public class TeacherOptions extends AppCompatActivity {
     TeacherOpAdapter teacherOpAdapter;
     SharedPreferences sp;
     Button createButton;
+    String time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_options);
+
+        Bundle bundle = getIntent().getExtras();
+        time = bundle.getString("TIME");
 
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.createDiss);
@@ -125,7 +129,7 @@ public class TeacherOptions extends AppCompatActivity {
         }
         JSONObject jsonBody = new JSONObject();
         try {
-            jsonBody.put("classDate", "2020-09-01 08:30:00");
+            jsonBody.put("classDate", time);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -216,7 +220,7 @@ public class TeacherOptions extends AppCompatActivity {
         try {
             jsonBody.put("classId", "3");
             jsonBody.put("title", dissTile);
-            jsonBody.put("classDate", "2020-09-01 08:30:00");
+            jsonBody.put("classDate", time);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -264,29 +268,29 @@ public class TeacherOptions extends AppCompatActivity {
                         }
                     });
                 }
-                JSONArray discussions;
-                try {
-                    Log.d("JSON", jsonObject.toString());
-                    discussions = jsonObject.getJSONArray("class");
-                    JSONObject temp;
-                    for (int i = 0; i < discussions.length(); i++) {
-                        temp = discussions.getJSONObject(i);
-                        TeacherOpModel model = new TeacherOpModel();
-                        model.classId = temp.getString("class_id");
-                        model.titleCreate = temp.getString("title");
-                        model.classDate = temp.getString("discussion_date");
-                        model.setImage(R.drawable.shadowfight);
-                        modelArrayList.add(model);
-                    }
-                    TeacherOptions.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            teacherOpAdapter.notifyDataSetChanged();
-                        }
-                    });
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+//                JSONArray discussions;
+//                try {
+//                    Log.d("JSON", jsonObject.toString());
+//                    discussions = jsonObject.getJSONArray("class");
+//                    JSONObject temp;
+//                    for (int i = 0; i < discussions.length(); i++) {
+//                        temp = discussions.getJSONObject(i);
+//                        TeacherOpModel model = new TeacherOpModel();
+//                        model.classId = temp.getString("class_id");
+//                        model.titleCreate = temp.getString("title");
+//                        model.classDate = temp.getString("discussion_date");
+//                        model.setImage(R.drawable.shadowfight);
+//                        modelArrayList.add(model);
+//                    }
+//                    TeacherOptions.this.runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            teacherOpAdapter.notifyDataSetChanged();
+//                        }
+//                    });
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
                 getDiscussions(userID, password);
             }
         });

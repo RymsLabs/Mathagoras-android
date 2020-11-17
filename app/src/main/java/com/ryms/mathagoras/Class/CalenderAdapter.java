@@ -69,6 +69,7 @@ public class CalenderAdapter extends RecyclerView.Adapter<CalenderAdapter.MyHold
                     intent =  new Intent(holder.imageView.getContext(), Options.class);
                 }
                 //intent.putExtra("dcid", modelArrayList.get(position).cid);
+                intent.putExtra("TIME", modelArrayList.get(position).rawDate);
                 holder.imageView.getContext().startActivity(intent);
             }
         });

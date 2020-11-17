@@ -63,7 +63,7 @@ public class ClassRoom extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         cid = bundle.getString("cid");
-        
+
         sp = getSharedPreferences("SETTING", 0);
         builder = new AlertDialog.Builder(this);
 
@@ -168,7 +168,8 @@ public class ClassRoom extends AppCompatActivity {
                             String[] d = inpt1;
 
                             LocalDate temp = date1.plusDays(i);
-
+                            Log.d("TEMP DATE", temp.toString());
+                            model.rawDate = temp.toString() + " " + classes.getString("start_time");
                             model.date = temp.getDayOfMonth();
                             model.month = temp.getMonth().name();
                             model.day = temp.getDayOfWeek().name();

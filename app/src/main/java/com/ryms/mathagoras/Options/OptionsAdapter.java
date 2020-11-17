@@ -54,6 +54,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.MyHolder
         holder.titleDiss.setText(modelArrayList.get(position).titleDiss);
         holder.messagePost.setText(modelArrayList.get(position).messagePost);
 
+
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

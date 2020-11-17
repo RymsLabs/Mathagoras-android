@@ -175,7 +175,7 @@ public class ClassRoom extends AppCompatActivity {
 
                             LocalDate temp = date1.plusDays(i);
                             Log.d("TEMP DATE", temp.toString());
-                            model.cid =cid;
+                            model.cid = cid;
                             model.rawDate = temp.toString() + " " + classes.getString("start_time");
                             model.date = temp.getDayOfMonth();
                             model.month = temp.getMonth().name();

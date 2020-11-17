@@ -1,7 +1,5 @@
 package com.ryms.mathagoras.Configurations;
 
-import com.ryms.mathagoras.Dashb.TeacherDash;
-
 public class Config {
     public static final String BASE_URL = "https://mathagoras-backend.herokuapp.com";
 
@@ -12,6 +10,7 @@ public class Config {
     public static final String GET_COURSES_TEACHER = BASE_URL+"/course/teacher/all";
     public static final String CREATE_DISCUSSION = BASE_URL+"/discussion/";
     public static final String SEND_MESSAGE_TEACHER = BASE_URL+"/messages/teacher/";
+    public static final String CREATE_POST = BASE_URL+"/post/";
 
     public static final String STUDENT_ROUTE = BASE_URL+"/student";
     public static final String STUDENT_LOGIN = STUDENT_ROUTE+"/login";

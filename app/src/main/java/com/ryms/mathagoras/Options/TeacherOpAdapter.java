@@ -1,6 +1,7 @@
 package com.ryms.mathagoras.Options;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ryms.mathagoras.Discussion.Discussion;
+import com.ryms.mathagoras.Onboard.OnBoardingActivity;
 import com.ryms.mathagoras.R;
 
 import java.util.ArrayList;
 
 public class TeacherOpAdapter extends RecyclerView.Adapter<TeacherOpAdapter.MyHolder> {
     public ArrayList<TeacherOpModel> modelArrayList = new ArrayList<>();
+    SharedPreferences sp;
 
 
     public class MyHolder extends RecyclerView.ViewHolder {
@@ -39,6 +42,7 @@ public class TeacherOpAdapter extends RecyclerView.Adapter<TeacherOpAdapter.MyHo
     @Override
     public TeacherOpAdapter.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.create_discussion, null);
+        sp = parent.getContext().getSharedPreferences("SETTING", 0);
         return new TeacherOpAdapter.MyHolder(itemView);
     }
 
@@ -52,10 +56,16 @@ public class TeacherOpAdapter extends RecyclerView.Adapter<TeacherOpAdapter.MyHo
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =  new Intent(holder.imageView.getContext(), Discussion.class);
+                String created = sp.getString("Created", "");
+                Intent intent;
+                if (created.equalsIgnoreCase("Discussion")) {
+                    intent = new Intent(holder.imageView.getContext(), Discussion.class);
+                }
+                else{
+                    intent = new Intent(holder.imageView.getContext(), OnBoardingActivity.class);
+                }
                 intent.putExtra("discussionId", modelArrayList.get(position).classId);
                 holder.imageView.getContext().startActivity(intent);
-
             }
         });
     }

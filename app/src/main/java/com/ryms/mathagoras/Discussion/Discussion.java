@@ -164,11 +164,7 @@ public class Discussion extends AppCompatActivity {
                     Log.d("JSON", jsonObject.toString());
                     messages = jsonObject.getJSONArray("messages");
                     JSONObject temp;
-
                     temp = messages.getJSONObject(0);
-
-
-
 
                     for (int i = 0; i < messages.length(); i++) {
                         SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
@@ -177,6 +173,7 @@ public class Discussion extends AppCompatActivity {
                         String date = new SimpleDateFormat("dd-MM-yyyy").format(myDate);
                         temp = messages.getJSONObject(i);
                         DissModel model = new DissModel();
+                        model.nameDiss = temp.getString("username");
                         model.user = temp.getString("user_id");
                         model.dateDiss = date;
                         model.timeDiss = time;

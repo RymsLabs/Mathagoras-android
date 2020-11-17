@@ -48,7 +48,7 @@ public class TeacherOptions extends AppCompatActivity {
     TeacherOpAdapter teacherOpAdapter;
     SharedPreferences sp;
     Button createButton;
-    String time;
+    String time, cid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +57,8 @@ public class TeacherOptions extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         time = bundle.getString("TIME");
+        cid = bundle.getString("cid");
+
 
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.createDiss);
@@ -73,7 +75,7 @@ public class TeacherOptions extends AppCompatActivity {
         final String password = sp.getString("PASSWORD", "");
 
         final Spinner spinner = findViewById(R.id.create);
-        final String[] items = new String[]{"Discussion", "Quiz"};
+        final String[] items = new String[]{"Discussion", "Post"};
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         spinner.setAdapter(adapter);
@@ -96,6 +98,22 @@ public class TeacherOptions extends AppCompatActivity {
                             .setPositiveButton("Create", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     createDiscussion(userID, password, dissTitle.getText().toString());
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert = builder.create();
+                    alert.setTitle("Create");
+                    alert.show();
+                }else{
+                    builder.setCancelable(false)
+                            .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    createPost(userID, password, dissTitle.getText().toString());
                                 }
                             })
                             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -136,9 +154,10 @@ public class TeacherOptions extends AppCompatActivity {
 
         /** Creating a request obj to request to a url */
         RequestBody body = RequestBody.create(String.valueOf(jsonBody), JSON);
+        Log.d("CID",cid);
         Request request = new Request.Builder()
                 .header("Authorization", ("Basic " + base64))
-                .url(Config.GET_DISCUSSION)
+                .url(Config.GET_DISCUSSION+cid)
                 .post(body)
                 .build();
 
@@ -202,7 +221,7 @@ public class TeacherOptions extends AppCompatActivity {
         });
     }
 
-    public void createDiscussion(final String userID, final String password, String dissTile) {
+    public void createDiscussion(final String userID, final String password, String dissTitle) {
 
         OkHttpClient client = new OkHttpClient();
 
@@ -218,8 +237,8 @@ public class TeacherOptions extends AppCompatActivity {
         }
         JSONObject jsonBody = new JSONObject();
         try {
-            jsonBody.put("classId", "3");
-            jsonBody.put("title", dissTile);
+            jsonBody.put("classId", cid);
+            jsonBody.put("title", dissTitle);
             jsonBody.put("classDate", time);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -296,7 +315,7 @@ public class TeacherOptions extends AppCompatActivity {
         });
     }
 
-    public void createQuiz(String userId, String password){
+    public void createPost(String userId, String password, String dissTitle){
 
     }
 }

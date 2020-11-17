@@ -21,6 +21,7 @@ public class Config {
     public static final String SEND_MESSAGE_STUDENT = BASE_URL+"/messages/student/";
 
     public static final String GET_CLASS = BASE_URL+"/class/";
-    public static final String GET_DISCUSSION = BASE_URL+"/discussion/3/";
+    public static final String GET_DISCUSSION = BASE_URL+"/discussion/";
+    public static final String GET_POST = BASE_URL+"/post/";
     public static final String GET_ALL_MESSAGES = BASE_URL+"/messages/";
 }

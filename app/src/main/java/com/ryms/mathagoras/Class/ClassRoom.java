@@ -54,7 +54,8 @@ public class ClassRoom extends AppCompatActivity {
     CalenderAdapter calenderAdapter;
     AlertDialog.Builder builder;
     SharedPreferences sp;
-    String cid;
+    String cid, courseName, teacherName;
+    TextView tName, cName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,13 @@ public class ClassRoom extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         cid = bundle.getString("cid");
+        courseName = bundle.getString("courseName");
+        teacherName = bundle.getString("teacherName");
+
+        cName = (TextView) findViewById(R.id.cName);
+        tName = (TextView) findViewById(R.id.tName);
+        cName.setText(courseName);
+        tName.setText(teacherName);
 
         sp = getSharedPreferences("SETTING", 0);
         builder = new AlertDialog.Builder(this);
@@ -167,6 +175,7 @@ public class ClassRoom extends AppCompatActivity {
 
                             LocalDate temp = date1.plusDays(i);
                             Log.d("TEMP DATE", temp.toString());
+                            model.cid =cid;
                             model.rawDate = temp.toString() + " " + classes.getString("start_time");
                             model.date = temp.getDayOfMonth();
                             model.month = temp.getMonth().name();

@@ -3,7 +3,7 @@ package com.ryms.mathagoras.Options;
 public class OptionsModel {
 
     private int image;
-    public String discussionId, titleDiss;
+    public String discussionId, titleDiss, messagePost;
     public int getImage() {
         return image;
     }

@@ -23,12 +23,13 @@
             android:id="@+id/user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/nameDiss"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="0dp"
             android:text="Enrollment Number"
-            android:textColor="#009688" />
+            android:textColor="#009688"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/dateDiss"
@@ -36,10 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/userType"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="77dp"
             android:layout_marginEnd="26dp"
-            android:layout_toEndOf="@+id/timeDiss"
             android:text="Date"
             android:textColor="#009688"
             android:textSize="10sp" />
@@ -51,7 +50,7 @@
             android:layout_below="@+id/user"
             android:layout_alignParentStart="true"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="10dp"
             android:text="Message"
             android:textColor="@color/darkTextColor"
             android:textSize="18sp" />
@@ -73,12 +72,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/userType"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="280dp"
             android:layout_marginTop="77dp"
+            android:layout_marginEnd="20dp"
+            android:layout_toStartOf="@+id/dateDiss"
             android:text="Time"
             android:textColor="#009688"
             android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/nameDiss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="10dp"
+            android:text="Name"
+            android:textColor="#009688"
+            android:textSize="12sp" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

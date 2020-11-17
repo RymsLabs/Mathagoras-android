@@ -157,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         jsonresponse = new JSONObject(response.body().string());
 
-                        if (jsonresponse.getJSONObject("teacher") != null) {
+                        if (!jsonresponse.isNull("teacher")) {
                             editor.putString("USERTYPE", "teacher");
                             editor.putString("NAME", jsonresponse.getJSONObject("teacher").getString("fname"));
                         } else {

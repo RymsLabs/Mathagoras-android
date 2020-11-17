@@ -25,12 +25,13 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.MyHolder
 
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        public TextView discussionId, titleDiss;
+        public TextView discussionId, titleDiss, messagePost;
         public ImageView imageView;
         public MyHolder(View view) {
             super(view);
             discussionId = (TextView) view.findViewById(R.id.discussionId);
             titleDiss = (TextView) view.findViewById(R.id.titleDiss);
+            messagePost = (TextView) view.findViewById(R.id.messagePost);
             this.imageView = view.findViewById(R.id.dissTile);
         }
     }
@@ -51,6 +52,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.MyHolder
         holder.imageView.setImageResource(modelArrayList.get(position).getImage());
         holder.discussionId.setText(modelArrayList.get(position).discussionId);
         holder.titleDiss.setText(modelArrayList.get(position).titleDiss);
+        holder.messagePost.setText(modelArrayList.get(position).messagePost);
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override

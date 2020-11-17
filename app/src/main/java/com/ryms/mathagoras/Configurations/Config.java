@@ -10,6 +10,7 @@ public class Config {
     public static final String TEACHER_LOGIN = TEACHER_ROUTE +"/login";
     public static final String ADD_COURSES = BASE_URL+"/course";
     public static final String GET_COURSES_TEACHER = BASE_URL+"/course/teacher/all";
+    public static final String CREATE_DISCUSSION = BASE_URL+"/discussion/";
 
     public static final String STUDENT_ROUTE = BASE_URL+"/student";
     public static final String STUDENT_LOGIN = STUDENT_ROUTE+"/login";

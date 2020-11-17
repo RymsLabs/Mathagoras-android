@@ -165,7 +165,7 @@ public class TeacherDash extends AppCompatActivity {
                         temp = courses.getJSONObject(i);
                         Model model = new Model();
                         model.cname = temp.getString("name");
-                        model.tname = temp.getString("course_id");
+                        model.cid = temp.getString("course_id");
                         model.description = temp.getString("description");
                         model.setImage(R.drawable.shadowfight);
                         modelArrayList.add(model);

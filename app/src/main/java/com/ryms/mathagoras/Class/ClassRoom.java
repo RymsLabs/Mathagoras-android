@@ -63,7 +63,7 @@ public class ClassRoom extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         cid = bundle.getString("cid");
-
+        
         sp = getSharedPreferences("SETTING", 0);
         builder = new AlertDialog.Builder(this);
 

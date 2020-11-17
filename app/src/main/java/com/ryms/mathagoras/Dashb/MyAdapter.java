@@ -56,7 +56,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
                 Intent intent =  new Intent(holder.imageView.getContext(), ClassRoom.class);
                 intent.putExtra("cid", modelArrayList.get(position).cid);
                 holder.imageView.getContext().startActivity(intent);
-
             }
         });
     }

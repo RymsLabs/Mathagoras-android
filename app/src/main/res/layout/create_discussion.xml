@@ -22,32 +22,45 @@
             android:background="@drawable/shadowfight" />
 
         <TextView
-            android:id="@+id/discussionId"
+            android:id="@+id/classId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="15dp"
             android:elevation="4dp"
             android:fontFamily="@font/playfair_display_regular"
-            android:text="Description ID"
+            android:text="Class ID"
             android:textColor="@color/darkTextColor"
             android:textColorHint="#00F44336"
-            android:textSize="24sp" />
+            android:textSize="22sp" />
 
         <TextView
-            android:id="@+id/titleDiss"
+            android:id="@+id/titleCreate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/discussionId"
+            android:layout_below="@+id/classId"
             android:layout_alignParentStart="true"
             android:layout_marginStart="26dp"
             android:layout_marginTop="12dp"
             android:fontFamily="@font/playfair_display_regular"
             android:text="Title"
             android:textColor="@color/darkTextColor"
-            android:textSize="24sp" />
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/classDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleCreate"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/playfair_display_regular"
+            android:text="Class Date"
+            android:textColor="@color/darkTextColor"
+            android:textSize="22sp" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

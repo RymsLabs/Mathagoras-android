@@ -150,7 +150,6 @@ public class ClassRoom extends AppCompatActivity {
                     else {
                         classes = temp1.getJSONObject(0);
 
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd");
                         String from = classes.getString("from").split("T")[0];
                         String till = classes.getString("till").split("T")[0];
 
@@ -165,7 +164,6 @@ public class ClassRoom extends AppCompatActivity {
 
                         for (int i = 0; i < daysBetween; i++) {
                             ClassModel model = new ClassModel();
-                            String[] d = inpt1;
 
                             LocalDate temp = date1.plusDays(i);
                             Log.d("TEMP DATE", temp.toString());

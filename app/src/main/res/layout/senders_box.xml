@@ -31,14 +31,16 @@
             android:textColor="#009688" />
 
         <TextView
-            android:id="@+id/date_time"
+            android:id="@+id/dateDiss"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/user"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="26dp"
-            android:layout_marginTop="0dp"
-            android:text="Date and Time"
+            android:layout_below="@+id/userType"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="77dp"
+            android:layout_marginEnd="26dp"
+            android:layout_toEndOf="@+id/timeDiss"
+            android:text="Date"
             android:textColor="#009688"
             android:textSize="10sp" />
 
@@ -46,10 +48,10 @@
             android:id="@+id/mess_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/date_time"
+            android:layout_below="@+id/user"
             android:layout_alignParentStart="true"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="18dp"
             android:text="Message"
             android:textColor="@color/darkTextColor"
             android:textSize="18sp" />
@@ -65,6 +67,18 @@
             android:text="User Type"
             android:textColor="#D32F2F"
             android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/timeDiss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userType"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="280dp"
+            android:layout_marginTop="77dp"
+            android:text="Time"
+            android:textColor="#009688"
+            android:textSize="10sp" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

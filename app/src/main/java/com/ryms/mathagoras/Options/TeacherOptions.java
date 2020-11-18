@@ -59,7 +59,6 @@ public class TeacherOptions extends AppCompatActivity {
         time = bundle.getString("TIME");
         cid = bundle.getString("cid");
 
-
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.createDiss);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -164,7 +163,6 @@ public class TeacherOptions extends AppCompatActivity {
 
         /** Creating a request obj to request to a url */
         RequestBody body = RequestBody.create(String.valueOf(jsonBody), JSON);
-        Log.d("CID",cid);
         Request request = new Request.Builder()
                 .header("Authorization", ("Basic " + base64))
                 .url(Config.GET_DISCUSSION+cid)
@@ -184,6 +182,7 @@ public class TeacherOptions extends AppCompatActivity {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
+
                 JSONObject jsonObject = null;
                 String body = response.body().string();
                 try {

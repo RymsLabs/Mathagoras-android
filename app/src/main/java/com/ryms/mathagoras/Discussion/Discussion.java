@@ -164,9 +164,9 @@ public class Discussion extends AppCompatActivity {
                     Log.d("JSON", jsonObject.toString());
                     messages = jsonObject.getJSONArray("messages");
                     JSONObject temp;
-                    temp = messages.getJSONObject(0);
 
                     for (int i = 0; i < messages.length(); i++) {
+                        temp = messages.getJSONObject(i);
                         SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
                         Date myDate = myFormat.parse(temp.getString("message_time"));
                         String time = new SimpleDateFormat("H:mm").format(myDate);

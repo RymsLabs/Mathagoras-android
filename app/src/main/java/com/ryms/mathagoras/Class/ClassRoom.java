@@ -77,11 +77,12 @@ public class ClassRoom extends AppCompatActivity {
 
         final String userID = sp.getString("USERID", "");
         final String password = sp.getString("PASSWORD", "");
+        final String userType = sp.getString("USERTYPE", "");
 
-        getClasses(userID, password);
+        getClasses(userID, password, userType);
     }
 
-    public void getClasses(String userID, String password) {
+    public void getClasses(String userID, String password, String userType) {
 
         OkHttpClient client = new OkHttpClient();
 
@@ -104,12 +105,21 @@ public class ClassRoom extends AppCompatActivity {
             /** Hopefully will never be called */
             throw new Error("Unexpectedly found base64 null during login");
         }
-
+        Request request;
         /** Creating a request obj to request to a url */
-        Request request = new Request.Builder()
-                .header("Authorization", ("Basic " + base64))
-                .url(Config.GET_CLASS+cid)
-                .build();
+        if(userType.equals("teacher")){
+
+                    request = new Request.Builder().header("Authorization", ("Basic " + base64))
+                    .url(Config.GET_CLASS+teacherName)
+                    .build();
+        }
+        else
+        {
+                    request = new Request.Builder().header("Authorization", ("Basic " + base64))
+                    .url(Config.GET_CLASS+cid)
+                    .build();
+        }
+
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -176,6 +186,7 @@ public class ClassRoom extends AppCompatActivity {
                             LocalDate temp = date1.plusDays(i);
                             Log.d("TEMP DATE", temp.toString());
                             model.cid = cid;
+                            model.teacherName =teacherName;
                             model.rawDate = temp.toString() + " " + classes.getString("start_time");
                             model.date = temp.getDayOfMonth();
                             model.month = temp.getMonth().name();

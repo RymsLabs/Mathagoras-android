@@ -74,7 +74,7 @@ public class Options extends AppCompatActivity {
         teamsInt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.google.android.youtube");
+                Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.microsoft.teams");
                 if (launchIntent != null) {
                         startActivity(launchIntent);
                 } else {

@@ -65,12 +65,14 @@ public class CalenderAdapter extends RecyclerView.Adapter<CalenderAdapter.MyHold
                 Intent intent;
                 if (type.equalsIgnoreCase("teacher")) {
                     intent =  new Intent(holder.imageView.getContext(), TeacherOptions.class);
+                    intent.putExtra("cid", modelArrayList.get(position).teacherName);
                 } else {
                     intent =  new Intent(holder.imageView.getContext(), Options.class);
+                    intent.putExtra("cid", modelArrayList.get(position).cid);
                 }
                 //intent.putExtra("dcid", modelArrayList.get(position).cid);
                 intent.putExtra("TIME", modelArrayList.get(position).rawDate);
-                intent.putExtra("cid", modelArrayList.get(position).cid);
+
                 holder.imageView.getContext().startActivity(intent);
             }
         });

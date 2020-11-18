@@ -59,7 +59,7 @@ public class TeacherDash extends AppCompatActivity {
 
         final String userID = sp.getString("USERID", "");
         final String password = sp.getString("PASSWORD", "");
-        final String name = sp.getString("NAMET", "");
+        final String name = sp.getString("NAME", "");
 
         /** requests courses already enrolled from the server */
         getCourses(userID, password, name);
@@ -165,7 +165,7 @@ public class TeacherDash extends AppCompatActivity {
                         temp = courses.getJSONObject(i);
                         Model model = new Model();
                         model.cname = temp.getString("name");
-                        model.cid = temp.getString("course_id");
+                        model.tname = temp.getString("course_id");
                         model.description = temp.getString("description");
                         model.setImage(R.drawable.shadowfight);
                         modelArrayList.add(model);

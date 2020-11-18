@@ -48,7 +48,7 @@ public class TeacherOptions extends AppCompatActivity {
     TeacherOpAdapter teacherOpAdapter;
     SharedPreferences sp;
     Button createButton;
-    String time, cid;
+    String time, cid, TypeT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +87,6 @@ public class TeacherOptions extends AppCompatActivity {
 
         getDiscussions(userID, password);
         getPosts(userID, password);
-
 
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +139,7 @@ public class TeacherOptions extends AppCompatActivity {
 
     public void getDiscussions(String userID, String password) {
 
+        TypeT = "Discussion";
         modelArrayList.clear();
 
         OkHttpClient client = new OkHttpClient();
@@ -212,6 +212,7 @@ public class TeacherOptions extends AppCompatActivity {
                     for (int i = 0; i < discussions.length(); i++) {
                         temp = discussions.getJSONObject(i);
                         TeacherOpModel model = new TeacherOpModel();
+                        model.TypeT = TypeT;
                         model.classId = temp.getString("discussion_id");
                         model.titleCreate = temp.getString("title");
                         model.setImage(R.drawable.shadowfight);
@@ -375,6 +376,7 @@ public class TeacherOptions extends AppCompatActivity {
 
     public void getPosts(String userID, String password){
 
+        //TypeT = "Post";
         modelArrayList.clear();
 
         OkHttpClient client = new OkHttpClient();
@@ -445,6 +447,7 @@ public class TeacherOptions extends AppCompatActivity {
                     for (int i = 0; i < posts.length(); i++) {
                         TeacherOpModel model = new TeacherOpModel();
                         temp = posts.getJSONObject(i);
+                        model.TypeT = TypeT;
                         model.classId = temp.getString("post_id");
                         model.titleCreate = temp.getString("title");
                         model.classDate = temp.getString("message");

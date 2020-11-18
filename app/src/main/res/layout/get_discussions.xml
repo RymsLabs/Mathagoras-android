@@ -22,45 +22,48 @@
             android:background="@drawable/shadowfight" />
 
         <TextView
-            android:id="@+id/discussionId"
+            android:id="@+id/Type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="8dp"
             android:elevation="4dp"
-            android:fontFamily="@font/playfair_display_regular"
-            android:text="Description ID"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Type"
             android:textColor="@color/darkTextColor"
             android:textColorHint="#00F44336"
-            android:textSize="24sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/titleDiss"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/discussionId"
+            android:layout_below="@+id/Type"
             android:layout_alignParentStart="true"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/playfair_display_regular"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/roboto_italic_v1"
             android:text="Title"
             android:textColor="@color/darkTextColor"
-            android:textSize="24sp" />
+            android:textSize="14sp" />
 
-        <TextView
+        <katex.hourglass.in.mathlib.MathView
             android:id="@+id/messagePost"
-            android:layout_width="wrap_content"
+            android:layout_width="331dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/titleDiss"
             android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/playfair_display_regular"
-            android:text="Message"
-            android:textColor="@color/darkTextColor"
-            android:textSize="24sp" />
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="26dp"
+            android:background="#ffffff"
+            app:setClickable="true"
+            app:setTextColor="@color/darkTextColor"
+            app:setTextSize="14sp" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

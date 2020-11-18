@@ -17,19 +17,22 @@ import com.ryms.mathagoras.R;
 
 import java.util.ArrayList;
 
+import katex.hourglass.in.mathlib.MathView;
+
 public class TeacherOpAdapter extends RecyclerView.Adapter<TeacherOpAdapter.MyHolder> {
     public ArrayList<TeacherOpModel> modelArrayList = new ArrayList<>();
     SharedPreferences sp;
 
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        public TextView classId, titleCreate, classDate;
+        public TextView TypeT, titleCreate;
+        MathView classDate;
         public ImageView imageView;
         public MyHolder(View view) {
             super(view);
-            classId = (TextView) view.findViewById(R.id.classId);
+            TypeT = (TextView) view.findViewById(R.id.TypeT);
             titleCreate = (TextView) view.findViewById(R.id.titleCreate);
-            classDate = (TextView) view.findViewById(R.id.classDate);
+            classDate = (MathView) view.findViewById(R.id.classDate);
             this.imageView = view.findViewById(R.id.dissTile);
         }
     }
@@ -49,23 +52,19 @@ public class TeacherOpAdapter extends RecyclerView.Adapter<TeacherOpAdapter.MyHo
     @Override
     public void onBindViewHolder(@NonNull final MyHolder holder, final int position) {
         holder.imageView.setImageResource(modelArrayList.get(position).getImage());
-        holder.classId.setText(modelArrayList.get(position).classId);
+        holder.TypeT.setText(modelArrayList.get(position).TypeT);
         holder.titleCreate.setText(modelArrayList.get(position).titleCreate);
-        holder.classDate.setText(modelArrayList.get(position).classDate);
+        holder.classDate.setDisplayText(modelArrayList.get(position).classDate);
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String created = sp.getString("Created", "");
                 Intent intent;
-                if (created.equalsIgnoreCase("Discussion")) {
+                if (modelArrayList.get(position).TypeT.equals("Discussion")) {
                     intent = new Intent(holder.imageView.getContext(), Discussion.class);
+                    intent.putExtra("discussionId", modelArrayList.get(position).classId);
+                    holder.imageView.getContext().startActivity(intent);
                 }
-                else{
-                    intent = new Intent(holder.imageView.getContext(), OnBoardingActivity.class);
-                }
-                intent.putExtra("discussionId", modelArrayList.get(position).classId);
-                holder.imageView.getContext().startActivity(intent);
             }
         });
     }

@@ -22,45 +22,48 @@
             android:background="@drawable/shadowfight" />
 
         <TextView
-            android:id="@+id/classId"
+            android:id="@+id/TypeT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             android:elevation="4dp"
             android:fontFamily="@font/playfair_display_regular"
-            android:text="Class ID"
+            android:text="Type"
             android:textColor="@color/darkTextColor"
             android:textColorHint="#00F44336"
-            android:textSize="22sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/titleCreate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/classId"
+            android:layout_below="@+id/TypeT"
             android:layout_alignParentStart="true"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="@font/playfair_display_regular"
             android:text="Title"
             android:textColor="@color/darkTextColor"
-            android:textSize="22sp" />
+            android:textSize="14sp" />
 
-        <TextView
+        <katex.hourglass.in.mathlib.MathView
             android:id="@+id/classDate"
-            android:layout_width="wrap_content"
+            android:layout_width="331dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/titleCreate"
             android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/playfair_display_regular"
-            android:text="Class Date"
-            android:textColor="@color/darkTextColor"
-            android:textSize="22sp" />
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="26dp"
+            android:background="#ffffff"
+            app:setClickable="true"
+            app:setTextColor="@color/darkTextColor"
+            app:setTextSize="14sp" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

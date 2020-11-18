@@ -101,9 +101,6 @@ public class Options extends AppCompatActivity {
     }
 
     public void getDiscussions(String userID, String password) {
-
-        type = "Discussion";
-
         OkHttpClient client = new OkHttpClient();
 
         String plainAuth = userID + ":" + password;
@@ -172,7 +169,7 @@ public class Options extends AppCompatActivity {
                         temp = discussions.getJSONObject(i);
                         OptionsModel model = new OptionsModel();
                         model.discussionId = temp.getString("discussion_id");
-                        model.Type = type;
+                        model.Type = "Discussion";
                         model.titleDiss = temp.getString("title");
                         model.setImage(R.drawable.shadowfight);
                         modelArrayList.add(model);
@@ -191,9 +188,6 @@ public class Options extends AppCompatActivity {
     }
 
     public void getPosts(String userID, String password){
-
-        type = "Post";
-
         OkHttpClient client = new OkHttpClient();
 
         String plainAuth = userID + ":" + password;
@@ -262,7 +256,7 @@ public class Options extends AppCompatActivity {
                     for (int i = 0; i < posts.length(); i++) {
                         OptionsModel model = new OptionsModel();
                         temp = posts.getJSONObject(i);
-                        model.Type = type;
+                        model.Type = "Post";
                         model.discussionId = temp.getString("post_id");
                         model.titleDiss = temp.getString("title");
                         model.messagePost = temp.getString("message");

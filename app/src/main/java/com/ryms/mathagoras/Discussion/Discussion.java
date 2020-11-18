@@ -169,6 +169,7 @@ public class Discussion extends AppCompatActivity {
                         temp = messages.getJSONObject(i);
                         SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
                         Date myDate = myFormat.parse(temp.getString("message_time"));
+
                         String time = new SimpleDateFormat("H:mm").format(myDate);
                         String date = new SimpleDateFormat("dd-MM-yyyy").format(myDate);
                         temp = messages.getJSONObject(i);

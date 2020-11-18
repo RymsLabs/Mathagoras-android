@@ -186,7 +186,6 @@ public class TeacherOptions extends AppCompatActivity {
                 JSONObject jsonObject = null;
                 String body = response.body().string();
                 try {
-                    Log.d("BODY OH YEAH", body);
                     jsonObject = new JSONObject(body);
                 } catch (JSONException e) {
                     e.printStackTrace();

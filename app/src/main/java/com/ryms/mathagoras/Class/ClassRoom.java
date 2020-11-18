@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +47,7 @@ import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ClassRoom extends AppCompatActivity {
@@ -56,6 +59,7 @@ public class ClassRoom extends AppCompatActivity {
     SharedPreferences sp;
     String cid, courseName, teacherName;
     TextView tName, cName;
+    ImageButton createClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +82,21 @@ public class ClassRoom extends AppCompatActivity {
         final String userID = sp.getString("USERID", "");
         final String password = sp.getString("PASSWORD", "");
         final String userType = sp.getString("USERTYPE", "");
+
+        createClass = (ImageButton) findViewById(R.id.createClass);
+        if(userType.equals("student")) {
+            createClass.setVisibility(View.INVISIBLE);
+        }
+        else{
+            createClass.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    createClass.setVisibility(View.VISIBLE);
+                    addClass(userID, password, userType);
+                }
+            });
+        }
+
 
         getClasses(userID, password, userType);
     }
@@ -107,16 +126,14 @@ public class ClassRoom extends AppCompatActivity {
         }
         Request request;
         /** Creating a request obj to request to a url */
-        if(userType.equals("teacher")){
+        if (userType.equals("teacher")) {
 
-                    request = new Request.Builder().header("Authorization", ("Basic " + base64))
-                    .url(Config.GET_CLASS+teacherName)
+            request = new Request.Builder().header("Authorization", ("Basic " + base64))
+                    .url(Config.GET_CLASS + teacherName)
                     .build();
-        }
-        else
-        {
-                    request = new Request.Builder().header("Authorization", ("Basic " + base64))
-                    .url(Config.GET_CLASS+cid)
+        } else {
+            request = new Request.Builder().header("Authorization", ("Basic " + base64))
+                    .url(Config.GET_CLASS + cid)
                     .build();
         }
 
@@ -157,15 +174,14 @@ public class ClassRoom extends AppCompatActivity {
                 try {
                     Log.d("JSON", jsonObject.toString());
                     JSONArray temp1 = jsonObject.getJSONArray("classes");
-                    if(temp1.length()==0){
+                    if (temp1.length() == 0) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 Toast.makeText(getApplicationContext(), "No Class is scheduled", Toast.LENGTH_LONG).show();
                             }
                         });
-                    }
-                    else {
+                    } else {
                         classes = temp1.getJSONObject(0);
 
                         String from = classes.getString("from").split("T")[0];
@@ -186,7 +202,7 @@ public class ClassRoom extends AppCompatActivity {
                             LocalDate temp = date1.plusDays(i);
                             Log.d("TEMP DATE", temp.toString());
                             model.cid = cid;
-                            model.teacherName =teacherName;
+                            model.teacherName = teacherName;
                             model.rawDate = temp.toString() + " " + classes.getString("start_time");
                             model.date = temp.getDayOfMonth();
                             model.month = temp.getMonth().name();
@@ -203,13 +219,97 @@ public class ClassRoom extends AppCompatActivity {
                             }
                         });
                     }
-                }
-                catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
     }
+
+    public void addClass(String userID, String password, String userType) {
+        OkHttpClient client = new OkHttpClient();
+
+        final ArrayList<ClassModel> modelArrayList = new ArrayList<>();
+
+        RecyclerView recyclerView;
+        recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        calenderAdapter = new CalenderAdapter(modelArrayList);
+        recyclerView.setAdapter(calenderAdapter);
+
+        String plainAuth = userID + ":" + password;
+        String base64 = null;
+
+        byte[] data = plainAuth.getBytes(StandardCharsets.UTF_8);
+        base64 = Base64.encodeToString(data, Base64.NO_WRAP);
+
+        if (base64 == null) {
+            /** Hopefully will never be called */
+            throw new Error("Unexpectedly found base64 null during login");
+        }
+
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("courseId", teacherName);
+            jsonBody.put("startTime", "8:30");
+            jsonBody.put("endTime", "9:30");
+            jsonBody.put("from", "2020-11-01");
+            jsonBody.put("till", "2020-12-01");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Request request;
+        RequestBody body = RequestBody.create(String.valueOf(jsonBody), JSON);
+        request = new Request.Builder().header("Authorization", ("Basic " + base64))
+                .url(Config.ADD_CLASS)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                if (e instanceof UnknownHostException) {
+                    System.out.println("Please check your Internet connection.");
+                } else {
+                    System.out.println("Error executing login HTTP req.: ");
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response.body().string());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (response.code() != 200) {
+                    final JSONObject finalJsonObject = jsonObject;
+                    ClassRoom.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Toast.makeText(ClassRoom.this, finalJsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+                ClassRoom.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        calenderAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+        getClasses(userID, password, userType);
+    }
 }
+
 
 

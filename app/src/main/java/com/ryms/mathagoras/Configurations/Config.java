@@ -11,6 +11,7 @@ public class Config {
     public static final String CREATE_DISCUSSION = BASE_URL+"/discussion/";
     public static final String SEND_MESSAGE_TEACHER = BASE_URL+"/messages/teacher/";
     public static final String CREATE_POST = BASE_URL+"/post/";
+    public static final String ADD_CLASS = BASE_URL+"/class/";
 
     public static final String STUDENT_ROUTE = BASE_URL+"/student";
     public static final String STUDENT_LOGIN = STUDENT_ROUTE+"/login";

@@ -51,7 +51,12 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.MyHolder
         holder.imageView.setImageResource(modelArrayList.get(position).getImage());
         holder.Type.setText(modelArrayList.get(position).Type);
         holder.titleDiss.setText(modelArrayList.get(position).titleDiss);
-        holder.messagePost.setDisplayText(modelArrayList.get(position).messagePost);
+        if(modelArrayList.get(position).Type.equals("Post")){
+            holder.messagePost.setDisplayText(modelArrayList.get(position).messagePost);
+        }
+        else{
+            holder.messagePost.setDisplayText("");
+        }
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override

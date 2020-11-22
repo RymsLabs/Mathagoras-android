@@ -61,6 +61,11 @@ public class TeacherDash extends AppCompatActivity {
         final String password = sp.getString("PASSWORD", "");
         final String name = sp.getString("NAME", "");
 
+        teachId = findViewById(R.id.Id);
+        teachName = findViewById(R.id.Name);
+        teachId.setText(userID);
+        teachName.setText(name);
+
         /** requests courses already enrolled from the server */
         getCourses(userID, password, name);
 
@@ -95,10 +100,6 @@ public class TeacherDash extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
 
         final ArrayList<Model> modelArrayList = new ArrayList<>();
-        teachId = findViewById(R.id.Id);
-        teachName = findViewById(R.id.Name);
-        teachId.setText(userID);
-        teachName.setText(name);
 
         RecyclerView recyclerView;
         recyclerView = findViewById(R.id.recyclerView);

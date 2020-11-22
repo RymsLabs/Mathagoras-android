@@ -48,7 +48,7 @@ public class TeacherOptions extends AppCompatActivity {
     TeacherOpAdapter teacherOpAdapter;
     SharedPreferences sp;
     Button createButton;
-    String time, cid, TypeT;
+    String time, cid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,14 +133,12 @@ public class TeacherOptions extends AppCompatActivity {
                     alert.setTitle("Create");
                     alert.show();
                 }
+
             }
         });
     }
 
     public void getDiscussions(String userID, String password) {
-
-        TypeT = "Discussion";
-        modelArrayList.clear();
 
         OkHttpClient client = new OkHttpClient();
 
@@ -211,7 +209,7 @@ public class TeacherOptions extends AppCompatActivity {
                     for (int i = 0; i < discussions.length(); i++) {
                         temp = discussions.getJSONObject(i);
                         TeacherOpModel model = new TeacherOpModel();
-                        model.TypeT = TypeT;
+                        model.TypeT = "Discussion";
                         model.classId = temp.getString("discussion_id");
                         model.titleCreate = temp.getString("title");
                         model.setImage(R.drawable.shadowfight);
@@ -296,7 +294,8 @@ public class TeacherOptions extends AppCompatActivity {
                         }
                     });
                 }
-                getDiscussions(userID, password);
+                modelArrayList.clear();
+                getResources(userID, password);
             }
         });
     }
@@ -349,7 +348,6 @@ public class TeacherOptions extends AppCompatActivity {
                 JSONObject jsonObject = null;
                 try {
                     String body = response.body().string();
-                    Log.d("pls work",body);
                     jsonObject = new JSONObject(body);
 
                 } catch (JSONException e) {
@@ -368,15 +366,13 @@ public class TeacherOptions extends AppCompatActivity {
                         }
                     });
                 }
-                getPosts(userID, password);
+                modelArrayList.clear();
+                getResources(userID, password);
             }
         });
     }
 
     public void getPosts(String userID, String password){
-
-        //TypeT = "Post";
-        modelArrayList.clear();
 
         OkHttpClient client = new OkHttpClient();
 
@@ -446,7 +442,7 @@ public class TeacherOptions extends AppCompatActivity {
                     for (int i = 0; i < posts.length(); i++) {
                         TeacherOpModel model = new TeacherOpModel();
                         temp = posts.getJSONObject(i);
-                        model.TypeT = TypeT;
+                        model.TypeT = "Post";
                         model.classId = temp.getString("post_id");
                         model.titleCreate = temp.getString("title");
                         model.classDate = temp.getString("message");
@@ -459,6 +455,92 @@ public class TeacherOptions extends AppCompatActivity {
                             teacherOpAdapter.notifyDataSetChanged();
                         }
                     });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    void getResources(final String userID, final String password) {
+        modelArrayList.clear();
+        OkHttpClient client = new OkHttpClient();
+
+        String plainAuth = userID + ":" + password;
+        String base64 = null;
+
+        byte[] data = plainAuth.getBytes(StandardCharsets.UTF_8);
+        base64 = Base64.encodeToString(data, Base64.NO_WRAP);
+
+        if (base64 == null) {
+            /** Hopefully will never be called */
+            throw new Error("Unexpectedly found base64 null during login");
+        }
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("classDate", time);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        /** Creating a request obj to request to a url */
+        RequestBody body = RequestBody.create(String.valueOf(jsonBody), JSON);
+        Request request = new Request.Builder()
+                .header("Authorization", ("Basic " + base64))
+                .url(Config.GET_DISCUSSION+cid)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                if (e instanceof UnknownHostException) {
+                    System.out.println("Please check your Internet connection.");
+                } else {
+                    System.out.println("Error executing login HTTP req.: ");
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
+
+                JSONObject jsonObject = null;
+                String body = response.body().string();
+                Log.d("disccc", body);
+                try {
+                    jsonObject = new JSONObject(body);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (response.code() != 200) {
+                    final JSONObject finalJsonObject = jsonObject;
+                    TeacherOptions.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Toast.makeText(TeacherOptions.this, finalJsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+                JSONArray discussions;
+                try {
+                    Log.d("JSON", jsonObject.toString());
+                    discussions = jsonObject.getJSONArray("discussions");
+                    JSONObject temp;
+                    for (int i = 0; i < discussions.length(); i++) {
+                        temp = discussions.getJSONObject(i);
+                        TeacherOpModel model = new TeacherOpModel();
+                        model.TypeT = "Discussion";
+                        model.classId = temp.getString("discussion_id");
+                        model.titleCreate = temp.getString("title");
+                        model.setImage(R.drawable.shadowfight);
+                        modelArrayList.add(model);
+                    }
+                    getPosts(userID, password);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

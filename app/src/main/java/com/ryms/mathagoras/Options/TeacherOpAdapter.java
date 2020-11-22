@@ -54,7 +54,12 @@ public class TeacherOpAdapter extends RecyclerView.Adapter<TeacherOpAdapter.MyHo
         holder.imageView.setImageResource(modelArrayList.get(position).getImage());
         holder.TypeT.setText(modelArrayList.get(position).TypeT);
         holder.titleCreate.setText(modelArrayList.get(position).titleCreate);
-        holder.classDate.setDisplayText(modelArrayList.get(position).classDate);
+        if(modelArrayList.get(position).TypeT.equals("Post")){
+            holder.classDate.setDisplayText(modelArrayList.get(position).classDate);
+        }
+        else{
+            holder.classDate.setDisplayText("");
+        }
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.ryms.mathagoras.Configurations.Config;
 import com.ryms.mathagoras.Dashb.DashBoard;
+import com.ryms.mathagoras.Dashb.TeacherDash;
 import com.ryms.mathagoras.R;
 
 import org.json.JSONException;
@@ -61,7 +62,6 @@ public class SignUpActivity extends AppCompatActivity {
         JSONObject jsonBody = new JSONObject();
         final String userid = userId.getText().toString();
         final String userPass = passSign.getText().toString();
-        final String names = name.getText().toString();
         try {
             if (isTeacher) {
                 jsonBody.put("teacher_id", userId.getText().toString());
@@ -89,7 +89,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, final Response response) throws IOException {
                 final String myres = response.body().string();
                 SignUpActivity.this.runOnUiThread(new Runnable() {
                     @Override
@@ -104,11 +104,20 @@ public class SignUpActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sp.edit();
                                 editor.putString("USERID", userid);
                                 editor.putString("PASSWORD", userPass);
-                                editor.putString("NAMET", names);
-                                editor.commit();
                                 sp.edit().putBoolean("logged",true).apply();
-                                Intent intent = new Intent(SignUpActivity.this, DashBoard.class);
-                                startActivity(intent);
+                                if (!signUpResponse.isNull("teacher")) {
+                                    editor.putString("USERTYPE", "teacher");
+                                    editor.putString("NAME", name.getText().toString());
+                                    Intent intent = new Intent(SignUpActivity.this, TeacherDash.class);
+                                    editor.commit();
+                                    startActivity(intent);
+                                } else {
+                                    editor.putString("USERTYPE", "student");
+                                    editor.putString("NAME", name.getText().toString());
+                                    Intent intent = new Intent(SignUpActivity.this, DashBoard.class);
+                                    editor.commit();
+                                    startActivity(intent);
+                                }
                             } else {
                                 Toast.makeText(getApplicationContext(), "Error: " + signUpResponse.getString("message"), Toast.LENGTH_LONG).show();
                             }
